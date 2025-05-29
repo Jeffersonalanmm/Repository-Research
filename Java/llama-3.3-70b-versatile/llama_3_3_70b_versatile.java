@@ -1,4 +1,3 @@
-package Java;//add by author
 
 public class llama_3_3_70b_versatile { //class name replaced by author
     /**

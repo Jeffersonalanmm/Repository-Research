@@ -1,4 +1,3 @@
-package Java;
 import java.util.Random;
 public class llama_3_3_70b_versatile_random {
 

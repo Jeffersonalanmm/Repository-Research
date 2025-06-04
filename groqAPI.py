@@ -24,9 +24,9 @@ user = (
 chat_completion = client.chat.completions.create(
     messages=[
         {"role": "system", "content": prompt},
-        {"role": "user", "content": user.replace("<algorithm>", "Bubblesort algorithm").replace("<language>", "Java")},
+        {"role": "user", "content": user.replace("<algorithm>", "AVLTree algorithm").replace("<language>", "C")},
     ],
-    model="gemma2-9b-it",
+    model="mistral-saba-24b",
     temperature=0,
 )
 

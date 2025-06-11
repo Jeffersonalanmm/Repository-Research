@@ -1,9 +1,8 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-void gnome_sort(int arr[], int n) {
+int gnome_sort(int arr[], int n) {
     int i = 1;
     while (i < n) {
         if (arr[i-1] <= arr[i]) {
@@ -17,15 +16,15 @@ void gnome_sort(int arr[], int n) {
             }
         }
     }
+    return 0;
 }
 
 int main() {
     srand(time(NULL));
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
+    int arr[1000];
+    for (int i = 0; i < 1000; i++) {
         arr[i] = rand() % 1000;
     }
-    gnome_sort(arr, n);
-    return 0;
+    gnome_sort(arr, 1000);
 }
+

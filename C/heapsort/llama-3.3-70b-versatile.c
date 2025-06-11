@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Function to swap two elements
-void swap(int* a, int* b) {
+void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
     *b = temp;
@@ -26,39 +27,32 @@ void heapify(int arr[], int n, int i) {
     }
 }
 
-// Function to build a max heap
-void build_max_heap(int arr[], int n) {
+// Function to implement heap sort
+void heapSort(int arr[], int n) {
+    // Build a max heap
     for (int i = n / 2 - 1; i >= 0; i--)
         heapify(arr, n, i);
-}
 
-// Function to perform heap sort
-void heap_sort(int arr[], int n) {
-    build_max_heap(arr, n);
-
+    // Extract elements one by one
     for (int i = n - 1; i >= 0; i--) {
         swap(&arr[0], &arr[i]);
         heapify(arr, i, 0);
     }
 }
 
-// Function to test heap sort
-void test_heap_sort(int* arr, int n) {
-    heap_sort(arr, n);
+// Function to generate random array
+void generateRandomArray(int arr[], int n) {
+    srand(time(NULL));
+    for (int i = 0; i < n; i++)
+        arr[i] = rand() % 1000;
 }
 
 int main() {
     int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
+    int arr[n];
 
-    // Generate random inputs
-    for (int i = 0; i < n; i++)
-        arr[i] = rand() % 1000;
-
-    test_heap_sort(arr, n);
-
-    // Free allocated memory
-    free(arr);
+    generateRandomArray(arr, n);
+    heapSort(arr, n);
 
     return 0;
 }

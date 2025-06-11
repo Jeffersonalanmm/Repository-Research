@@ -249,35 +249,22 @@ void postOrderTraversal(Node* root, void (*callback)(int key, void* value)) {
         callback(root->key, root->value);
     }
 }
+// Function to print key and value (for traversal)
+void printKeyAndValue(int key, void* value) {
+    printf("Key: %d\n", key);
+}
 
 // Example usage in main function
 int main() {
     Node* root = NULL;
 
-    // Insert nodes
-    root = insertNode(root, 10, NULL);
-    root = insertNode(root, 20, NULL);
-    root = insertNode(root, 30, NULL);
-    root = insertNode(root, 40, NULL);
-    root = insertNode(root, 50, NULL);
-    root = insertNode(root, 25, NULL);
+    FILE* f = fopen("../../inputs.txt", "r");
 
-    // Search for a key
-    void* result = search(root, 25);
-    if (result != NULL) {
-        // Key found
-    } else {
-        // Key not found
+    int value;
+    while (fscanf(f, "%d", &value) == 1) {
+        root = insertNode(root, value, NULL);
     }
 
-    // Delete a key
-    root = deleteNode(root, 25);
-
-    // Perform in-order traversal
-    void printKeyAndValue(int key, void* value) {
-        printf("Key: %d, Value: %p\n", key, value);
-    }
-    inOrderTraversal(root, printKeyAndValue);
-
+    fclose(f);
     return 0;
 }

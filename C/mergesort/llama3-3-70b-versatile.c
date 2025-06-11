@@ -3,13 +3,12 @@
 #include <time.h>
 
 // Function to merge two subarrays
-void merge(int* arr, int left, int mid, int right) {
+void merge(int arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
     // Create temporary arrays
-    int* left_arr = (int*)malloc(n1 * sizeof(int));
-    int* right_arr = (int*)malloc(n2 * sizeof(int));
+    int left_arr[n1], right_arr[n2];
 
     // Copy data to temporary arrays
     for (int i = 0; i < n1; i++)
@@ -17,9 +16,8 @@ void merge(int* arr, int left, int mid, int right) {
     for (int j = 0; j < n2; j++)
         right_arr[j] = arr[mid + 1 + j];
 
+    // Merge the temporary arrays back into arr[left..right]
     int i = 0, j = 0, k = left;
-
-    // Merge the temporary arrays back into arr
     while (i < n1 && j < n2) {
         if (left_arr[i] <= right_arr[j]) {
             arr[k] = left_arr[i];
@@ -31,27 +29,23 @@ void merge(int* arr, int left, int mid, int right) {
         k++;
     }
 
-    // Copy remaining elements of left_arr, if any
+    // Copy the remaining elements of left_arr[], if there are any
     while (i < n1) {
         arr[k] = left_arr[i];
         i++;
         k++;
     }
 
-    // Copy remaining elements of right_arr, if any
+    // Copy the remaining elements of right_arr[], if there are any
     while (j < n2) {
         arr[k] = right_arr[j];
         j++;
         k++;
     }
-
-    // Free the allocated memory
-    free(left_arr);
-    free(right_arr);
 }
 
-// Function to perform Merge Sort
-void merge_sort(int* arr, int left, int right) {
+// Function to implement merge sort
+void merge_sort(int arr[], int left, int right) {
     if (left < right) {
         int mid = left + (right - left) / 2;
 
@@ -65,30 +59,21 @@ void merge_sort(int* arr, int left, int right) {
 }
 
 // Function to generate random array
-void generate_random_array(int* arr, int size) {
-    for (int i = 0; i < size; i++) {
-        arr[i] = rand() % 1000; // Generate random numbers between 0 and 999
-    }
+void generate_random_array(int arr[], int size) {
+    srand(time(NULL));
+    for (int i = 0; i < size; i++)
+        arr[i] = rand() % 1000;
+}
+
+// Function to test merge sort
+void test_merge_sort() {
+    int size = 1000;
+    int arr[size];
+    generate_random_array(arr, size);
+    merge_sort(arr, 0, size - 1);
 }
 
 int main() {
-    srand(time(NULL)); // Seed for random number generation
-
-    int size = 1000;
-    int* arr = (int*)malloc(size * sizeof(int));
-
-    generate_random_array(arr, size);
-
-    merge_sort(arr, 0, size - 1);
-
-    // To verify the correctness, you can uncomment the following lines
-    // for (int i = 0; i < size - 1; i++) {
-    //     if (arr[i] > arr[i + 1]) {
-    //         printf("Sorting failed\n");
-    //         return 1;
-    //     }
-    // }
-
-    free(arr);
+    test_merge_sort();
     return 0;
 }

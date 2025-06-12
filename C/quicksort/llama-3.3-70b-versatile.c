@@ -3,7 +3,7 @@
 #include <time.h>
 
 // Function to swap two elements
-void swap(int* a, int* b) {
+void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
     *b = temp;
@@ -11,16 +11,14 @@ void swap(int* a, int* b) {
 
 // Function to partition the array and return the pivot index
 int partition(int arr[], int low, int high) {
-    int pivot = arr[high]; // Choosing the last element as the pivot
+    int pivot = arr[high];
     int i = low - 1;
-
     for (int j = low; j < high; j++) {
         if (arr[j] < pivot) {
             i++;
             swap(&arr[i], &arr[j]);
         }
     }
-
     swap(&arr[i + 1], &arr[high]);
     return i + 1;
 }
@@ -28,28 +26,28 @@ int partition(int arr[], int low, int high) {
 // Function to implement Quick Sort
 void quickSort(int arr[], int low, int high) {
     if (low < high) {
-        int pivotIndex = partition(arr, low, high);
-
-        quickSort(arr, low, pivotIndex - 1);
-        quickSort(arr, pivotIndex + 1, high);
+        int pivot = partition(arr, low, high);
+        quickSort(arr, low, pivot - 1);
+        quickSort(arr, pivot + 1, high);
     }
 }
 
-// Function to generate a random array of size n
-void generateRandomArray(int arr[], int n) {
+// Function to generate an array of 1000 random integers
+void generateRandomArray(int arr[]) {
     srand(time(NULL));
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000; // Generate random numbers between 0 and 9999
+    for (int i = 0; i < 1000; i++) {
+        arr[i] = rand() % 1001;
     }
+}
+
+// Function to test the Quick Sort implementation
+void testQuickSort() {
+    int arr[1000];
+    generateRandomArray(arr);
+    quickSort(arr, 0, 999);
 }
 
 int main() {
-    const int n = 1000;
-    int arr[n];
-
-    generateRandomArray(arr, n);
-
-    quickSort(arr, 0, n - 1);
-
+    testQuickSort();
     return 0;
 }

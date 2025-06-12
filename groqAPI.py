@@ -26,7 +26,7 @@ chat_completion = client.chat.completions.create(
         {"role": "system", "content": prompt},
         {"role": "user", "content": user.replace("<algorithm>", "Selection Sort Algorithm").replace("<language>", "c")},
     ],
-    model="qwen-qwq-32b",
+    model="deepseek-r1-distill-llama-70b",
     temperature=0,
 )
 

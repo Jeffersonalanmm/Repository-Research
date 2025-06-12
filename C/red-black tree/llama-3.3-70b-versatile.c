@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// Define the structure for a Red-Black Tree node
+// Define the structure for a tree node
 typedef struct Node {
     int data;
     int color; // 0 for red, 1 for black
@@ -13,10 +13,9 @@ typedef struct Node {
 
 // Function to create a new node
 Node* createNode(int data) {
-    Node* newNode = (Node*)malloc(sizeof(Node));
+    Node* newNode = (Node*) malloc(sizeof(Node));
     if (!newNode) {
-        printf("Memory error\n");
-        return NULL;
+        // Handle memory allocation error
     }
     newNode->data = data;
     newNode->color = 0; // New node is red
@@ -44,26 +43,60 @@ void leftRotate(Node** root, Node* x) {
 }
 
 // Function to perform right rotation
-void rightRotate(Node** root, Node* y) {
-    Node* x = y->left;
-    y->left = x->right;
-    if (x->right != NULL) {
-        x->right->parent = y;
+void rightRotate(Node** root, Node* x) {
+    Node* y = x->left;
+    x->left = y->right;
+    if (y->right != NULL) {
+        y->right->parent = x;
     }
-    x->parent = y->parent;
-    if (y->parent == NULL) {
-        *root = x;
-    } else if (y == y->parent->right) {
-        y->parent->right = x;
+    y->parent = x->parent;
+    if (x->parent == NULL) {
+        *root = y;
+    } else if (x == x->parent->right) {
+        x->parent->right = y;
     } else {
-        y->parent->left = x;
+        x->parent->left = y;
     }
-    x->right = y;
-    y->parent = x;
+    y->right = x;
+    x->parent = y;
+}
+
+// Function to insert a new node into the tree
+void insertNode(Node** root, int data) {
+    Node* newNode = createNode(data);
+    if (*root == NULL) {
+        *root = newNode;
+        (*root)->color = 1; // Root node is black
+        return;
+    }
+    Node* y = NULL;
+    Node* x = *root;
+    while (x != NULL) {
+        y = x;
+        if (newNode->data < x->data) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+    newNode->parent = y;
+    if (newNode->data < y->data) {
+        y->left = newNode;
+    } else {
+        y->right = newNode;
+    }
+    if (newNode->parent == NULL) {
+        newNode->color = 1; // Root node is black
+        return;
+    }
+    if (newNode->parent->parent == NULL) {
+        return;
+    }
+    fixInsert(root, newNode);
 }
 
 // Function to fix the tree after insertion
-void fixInsertion(Node** root, Node* k) {
+void fixInsert(Node** root, Node* k) {
     Node* u;
     while (k->parent != NULL && k->parent->color == 0) {
         if (k->parent == k->parent->parent->right) {
@@ -84,7 +117,6 @@ void fixInsertion(Node** root, Node* k) {
             }
         } else {
             u = k->parent->parent->right;
-
             if (u->color == 0) {
                 u->color = 1;
                 k->parent->color = 1;
@@ -107,46 +139,17 @@ void fixInsertion(Node** root, Node* k) {
     (*root)->color = 1;
 }
 
-// Function to insert a new node into the Red-Black Tree
-void insertNode(Node** root, int data) {
-    Node* newNode = createNode(data);
-    if (*root == NULL) {
-        *root = newNode;
-    } else {
-        Node* y = NULL;
-        Node* x = *root;
-        while (x != NULL) {
-            y = x;
-            if (newNode->data < x->data) {
-                x = x->left;
-            } else {
-                x = x->right;
-            }
-        }
-        newNode->parent = y;
-        if (newNode->data < y->data) {
-            y->left = newNode;
-        } else {
-            y->right = newNode;
-        }
+// Function to generate 1000 random inputs
+void generateRandomInputs(Node** root) {
+    srand(time(NULL));
+    for (int i = 0; i < 1000; i++) {
+        int data = rand() % 1000;
+        insertNode(root, data);
     }
-    if (newNode->parent == NULL) {
-        newNode->color = 1;
-        return;
-    }
-    if (newNode->parent->parent == NULL) {
-        return;
-    }
-    fixInsertion(root, newNode);
 }
 
-// Function to test the Red-Black Tree implementation
 int main() {
-    srand(time(NULL));
     Node* root = NULL;
-    for (int i = 0; i < 1000; i++) {
-        int data = rand() % 10000;
-        insertNode(&root, data);
-    }
+    generateRandomInputs(&root);
     return 0;
 }

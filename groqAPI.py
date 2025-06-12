@@ -24,9 +24,9 @@ user = (
 chat_completion = client.chat.completions.create(
     messages=[
         {"role": "system", "content": prompt},
-        {"role": "user", "content": user.replace("<algorithm>", "Red-Black Tree Algorithm").replace("<language>", "c")},
+        {"role": "user", "content": user.replace("<algorithm>", "Selection Sort Algorithm").replace("<language>", "c")},
     ],
-    model="mistral-saba-24b",
+    model="qwen-qwq-32b",
     temperature=0,
 )
 

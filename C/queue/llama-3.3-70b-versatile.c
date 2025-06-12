@@ -1,24 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
-// Define the structure for a queue node
-typedef struct Node {
+// Structure for a queue node
+typedef struct QueueNode {
     int data;
-    struct Node* next;
-} Node;
+    struct QueueNode* next;
+} QueueNode;
 
-// Define the structure for a queue
+// Structure for a queue
 typedef struct Queue {
-    Node* front;
-    Node* rear;
+    QueueNode* front;
+    QueueNode* rear;
     int size;
 } Queue;
 
 // Function to create a new queue node
-Node* createNode(int data) {
-    Node* newNode = (Node*) malloc(sizeof(Node));
+QueueNode* createQueueNode(int data) {
+    QueueNode* newNode = (QueueNode*) malloc(sizeof(QueueNode));
     if (!newNode) {
-        printf("Memory error\n");
         return NULL;
     }
     newNode->data = data;
@@ -30,7 +30,6 @@ Node* createNode(int data) {
 Queue* createQueue() {
     Queue* queue = (Queue*) malloc(sizeof(Queue));
     if (!queue) {
-        printf("Memory error\n");
         return NULL;
     }
     queue->front = NULL;
@@ -46,12 +45,12 @@ int isEmpty(Queue* queue) {
 
 // Function to add an element to the queue
 void enqueue(Queue* queue, int data) {
-    Node* newNode = createNode(data);
-    if (isEmpty(queue)) {
-        queue->front = newNode;
+    QueueNode* newNode = createQueueNode(data);
+    if (queue->rear) {
+        queue->rear->next = newNode;
         queue->rear = newNode;
     } else {
-        queue->rear->next = newNode;
+        queue->front = newNode;
         queue->rear = newNode;
     }
     queue->size++;
@@ -60,11 +59,10 @@ void enqueue(Queue* queue, int data) {
 // Function to remove an element from the queue
 int dequeue(Queue* queue) {
     if (isEmpty(queue)) {
-        printf("Queue is empty\n");
-        return -1;
+        return -1; // Queue is empty
     }
     int data = queue->front->data;
-    Node* temp = queue->front;
+    QueueNode* temp = queue->front;
     queue->front = queue->front->next;
     if (queue->front == NULL) {
         queue->rear = NULL;
@@ -75,35 +73,27 @@ int dequeue(Queue* queue) {
 }
 
 // Function to get the front element of the queue
-int peek(Queue* queue) {
+int front(Queue* queue) {
     if (isEmpty(queue)) {
-        printf("Queue is empty\n");
-        return -1;
+        return -1; // Queue is empty
     }
     return queue->front->data;
 }
 
-// Function to free the queue memory
-void freeQueue(Queue* queue) {
-    while (!isEmpty(queue)) {
-        dequeue(queue);
-    }
-    free(queue);
-}
-
-// Function to test the queue implementation
-void testQueue() {
-    Queue* queue = createQueue();
-    for (int i = 0; i < 1000; i++) {
-        enqueue(queue, i);
-    }
-    for (int i = 0; i < 1000; i++) {
-        dequeue(queue);
-    }
-    freeQueue(queue);
+// Function to get the size of the queue
+int size(Queue* queue) {
+    return queue->size;
 }
 
 int main() {
-    testQueue();
+    srand(time(NULL));
+    Queue* queue = createQueue();
+    for (int i = 0; i < 1000; i++) {
+        int data = rand() % 100;
+        enqueue(queue, data);
+    }
+    for (int i = 0; i < 500; i++) {
+        dequeue(queue);
+    }
     return 0;
 }

@@ -24,9 +24,9 @@ user = (
 chat_completion = client.chat.completions.create(
     messages=[
         {"role": "system", "content": prompt},
-        {"role": "user", "content": user.replace("<algorithm>", "Shell Sort Algorithm").replace("<language>", "c")},
+        {"role": "user", "content": user.replace("<algorithm>", "AVL tree Algorithm").replace("<language>", "python")},
     ],
-    model="qwen-qwq-32b",
+    model="deepseek-r1-distill-llama-70b",
     temperature=0,
 )
 

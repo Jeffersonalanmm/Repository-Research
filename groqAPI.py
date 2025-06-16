@@ -24,7 +24,7 @@ user = (
 chat_completion = client.chat.completions.create(
     messages=[
         {"role": "system", "content": prompt},
-        {"role": "user", "content": user.replace("<algorithm>", "Beadsort Algorithm").replace("<language>", "python")},
+        {"role": "user", "content": user.replace("<algorithm>", "Bellman-Ford Algorithm").replace("<language>", "java")},
     ],
     model="qwen-qwq-32b",
     temperature=0,

@@ -1,0 +1,51 @@
+
+import random
+
+def heapify(arr, n, i):
+    """
+    Heapify the array at index i.
+
+    :param arr: The input array.
+    :param n: The size of the heap.
+    :param i: The index to heapify.
+    :return: None
+    """
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    if left < n and arr[i] < arr[left]:
+        largest = left
+
+    if right < n and arr[largest] < arr[right]:
+        largest = right
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+def heap_sort(arr):
+    """
+    Sort the array using heap sort.
+
+    :param arr: The input array.
+    :return: The sorted array.
+    """
+    n = len(arr)
+
+    # Build a max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+
+    # Extract elements one by one
+    for i in range(n - 1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, i, 0)
+
+    return arr
+
+
+# Generate 1000 random numbers and sort them using heap sort
+arr = [random.randint(0, 10000) for _ in range(1000)]
+sorted_arr = heap_sort(arr)

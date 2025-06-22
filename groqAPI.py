@@ -24,10 +24,10 @@ user = (
 chat_completion = client.chat.completions.create(
     messages=[
         {"role": "system", "content": prompt},
-        {"role": "user", "content": user.replace("<algorithm>", "gnome sort Algorithm").replace("<language>", "python")},
+        {"role": "user", "content": user.replace("<algorithm>", "heap sort Algorithm").replace("<language>", "java")},
     ],
     model="mistral-saba-24b",
-    temperature=0,
+    temperature=0
 )
 
 print(chat_completion.choices[0].message.content)

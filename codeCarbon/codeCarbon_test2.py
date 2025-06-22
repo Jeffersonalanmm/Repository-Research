@@ -109,9 +109,20 @@ def medir_execucao(compile_cmd, run_cmd, script_path):
     tracker_output_dir = os.path.join(os.getcwd(), 'temp_codecarbon_output')
     criar_diretorio_se_nao_existir(tracker_output_dir)
 
+
+    # nome dos arquivos logs (linguagem + algoritimo + modelo)
+    path_normalizado = os.path.normpath(script_path)
+    partes_caminho = path_normalizado.split(os.sep)
+
+    linguagem = partes_caminho[0]
+    algoritmo = partes_caminho[1]
+    modelo = os.path.splitext(os.path.basename(script_path))[0]
+
+    log_filename = f"{linguagem}_{algoritmo}_{modelo}.log"
+
     tracker = EmissionsTracker(
         output_dir=tracker_output_dir,
-        project_name=f"medicao_{script_filename.replace('.', '_')}",
+        project_name=log_filename,
         measure_power_secs=2, 
         tracking_mode="machine"
     )
@@ -140,31 +151,21 @@ def medir_execucao(compile_cmd, run_cmd, script_path):
     # 3. Gerar o Log customizado
     print(f"\n[ETAPA 3/3] Gerando Log Customizado...")
     
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    log_filename = f"{script_filename.replace('.', '_')}_{timestamp}.log"
-    log_path = os.path.join(DIRETORIO_LOGS, log_filename)
 
-    # # Cálculos
-    # duration_sec = emissions_data.duration
-    # emissions_kg = emissions_data.emissions
-    
-    # emissions_per_second = (emissions_kg / duration_sec) if duration_sec > 0 else 0
-    # emissions_per_year = emissions_per_second * SEGUNDOS_EM_UM_ANO
+    log_path = os.path.join(DIRETORIO_LOGS, log_filename)
 
     execution_time = end_time - start_time.timestamp()
 
     dados_log = {
         "Script Analisado": script_path,
         "Timestamp da Medição": datetime.now().isoformat(),
-        "Emissões de carbono: ": emissions_data,
-        "_total_cpu_energy": tracker._total_cpu_energy,
-        "_cpu_power": tracker._cpu_power,
-        "_emissions": tracker._emissions,
-        "_total_energy": tracker._total_energy,
-        "_geo": tracker._geo,
-        "_log_level": tracker._log_level,
-        "execution_time": execution_time,
-
+        # "Emissões de carbono: ": emissions_data,
+        # "_total_cpu_energy": tracker._total_cpu_energy,
+        # "_cpu_power": tracker._cpu_power,
+        # "_total_energy": tracker._total_energy,
+        # "_geo": tracker._geo,
+        # "_log_level": tracker._log_level,
+        # "execution_time": execution_time,
         # "Emissão Anualizada (kg CO2eq/ano)": f"{emissions_per_year:.9f}",
         # "País (localização da medição)": f"{emissions_data.country_name} ({emissions_data.country_iso_code})",
         "codecarbon_log: ": codecarbon_log,
@@ -225,11 +226,11 @@ def main():
                 except OSError as e:
                     print(f"  > Erro ao remover {f}: {e}")
         # Limpa o diretório de CSVs do codecarbon
-        if os.path.exists('temp_codecarbon_output'):
-            for f in os.listdir('temp_codecarbon_output'):
-                os.remove(os.path.join('temp_codecarbon_output', f))
-            os.rmdir('temp_codecarbon_output')
-            print("  > Diretório temporário do CodeCarbon limpo.")
+        # if os.path.exists('temp_codecarbon_output'):
+        #     for f in os.listdir('temp_codecarbon_output'):
+        #         os.remove(os.path.join('temp_codecarbon_output', f))
+        #     os.rmdir('temp_codecarbon_output')
+        #     print("  > Diretório temporário do CodeCarbon limpo.")
 
 if __name__ == '__main__':
     main()

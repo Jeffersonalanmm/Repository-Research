@@ -1,12 +1,8 @@
 package Java.quicksort;
 import java.util.Random;
-public class meta_llama_llama_4_maverick_17b_128e_instruct {
 
-    public static void quickSort(int[] arr) {
-        quickSort(arr, 0, arr.length - 1);
-    }
-
-    private static void quickSort(int[] arr, int low, int high) {
+public class llama3_3_70b {
+    public static void quickSort(int[] arr, int low, int high) {
         if (low < high) {
             int pivotIndex = partition(arr, low, high);
             quickSort(arr, low, pivotIndex - 1);
@@ -14,7 +10,7 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
         }
     }
 
-    private static int partition(int[] arr, int low, int high) {
+    public static int partition(int[] arr, int low, int high) {
         int pivot = arr[high];
         int i = low - 1;
         for (int j = low; j < high; j++) {
@@ -27,20 +23,22 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
         return i + 1;
     }
 
-    private static void swap(int[] arr, int i, int j) {
+    public static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
 
-    public static void main(String[] args) {
-        int n = 1000;
-        int[] arr = new int[n];
-        Random rand = new Random();
-        for (int i = 0; i < n; i++) {
-            arr[i] = rand.nextInt(10000);
+    public static void testQuickSort() {
+        Random random = new Random();
+        int[] arr = new int[1000];
+        for (int i = 0; i < 1000; i++) {
+            arr[i] = random.nextInt(1000);
         }
-        quickSort(arr);
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    public static void main(String[] args) {
+        testQuickSort();
     }
 }
-

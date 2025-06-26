@@ -1,7 +1,7 @@
 package Java.quicksort;
 import java.util.Random;
 public class meta_llama_llama_4_maverick_17b_128e_instruct {
-
+    
     public static void quickSort(int[] arr) {
         quickSort(arr, 0, arr.length - 1);
     }
@@ -43,4 +43,3 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
         quickSort(arr);
     }
 }
-

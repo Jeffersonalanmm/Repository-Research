@@ -1,6 +1,6 @@
 package Java.quicksort;
-import java.util.Random;
-public class meta_llama_llama_4_maverick_17b_128e_instruct {
+  import java.util.Random;
+public class meta_llama_llama_4_scout_17b_16e_instruct {
 
     public static void quickSort(int[] arr) {
         quickSort(arr, 0, arr.length - 1);
@@ -34,13 +34,11 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
     }
 
     public static void main(String[] args) {
-        int n = 1000;
-        int[] arr = new int[n];
         Random rand = new Random();
-        for (int i = 0; i < n; i++) {
+        int[] arr = new int[1000];
+        for (int i = 0; i < 1000; i++) {
             arr[i] = rand.nextInt(10000);
         }
         quickSort(arr);
     }
 }
-

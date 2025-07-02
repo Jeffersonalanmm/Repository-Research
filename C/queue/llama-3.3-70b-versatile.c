@@ -86,14 +86,24 @@ int size(Queue* queue) {
 }
 
 int main() {
-    srand(time(NULL));
-    Queue* queue = createQueue();
-    for (int i = 0; i < 1000; i++) {
-        int data = rand() % 100;
-        enqueue(queue, data);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
-    for (int i = 0; i < 500; i++) {
-        dequeue(queue);
+
+    Queue *q = createQueue(); 
+    if (!q) {
+        fclose(file);
+        return 1;
     }
+
+    int num, count = 0;
+    while (count < 1000 && fscanf(file, "%d", &num) == 1) {
+        enqueue(q, num);
+        count++;
+    }
+    fclose(file);
+
+    free(q); 
     return 0;
 }

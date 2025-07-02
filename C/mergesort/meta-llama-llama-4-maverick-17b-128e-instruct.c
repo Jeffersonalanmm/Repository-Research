@@ -72,22 +72,21 @@ void generate_random_array(int* arr, int size) {
 }
 
 int main() {
-    srand(time(NULL)); // Seed for random number generation
+    int size = 0;
+    int* arr = (int*)malloc(1000 * sizeof(int));
 
-    int size = 1000;
-    int* arr = (int*)malloc(size * sizeof(int));
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        free(arr);
+        return 1;
+    }
 
-    generate_random_array(arr, size);
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
 
     merge_sort(arr, 0, size - 1);
-
-    // To verify the correctness, you can uncomment the following lines
-    // for (int i = 0; i < size - 1; i++) {
-    //     if (arr[i] > arr[i + 1]) {
-    //         printf("Sorting failed\n");
-    //         return 1;
-    //     }
-    // }
 
     free(arr);
     return 0;

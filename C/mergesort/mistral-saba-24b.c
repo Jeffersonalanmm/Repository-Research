@@ -59,13 +59,19 @@ void generateRandomArray(int arr[], int n) {
 }
 
 int main() {
-    int n = 1000;
-    int arr[n];
+    int arr[1000];
+    int n = 0;
 
-    srand(time(0)); // Seed for random number generation
-    generateRandomArray(arr, n);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+    fclose(file);
 
     mergeSort(arr, 0, n - 1);
-
     return 0;
 }

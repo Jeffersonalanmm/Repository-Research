@@ -31,10 +31,19 @@ void selection_sort(int array[], int size) {
 
 // Example usage
 int main() {
-    int array[] = {64, 25, 12, 22, 11};
-    int size = sizeof(array) / sizeof(array[0]);
-    
-    selection_sort(array, size);
-    
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+
+    selection_sort(arr, n);
+    fclose(file);
+
     return 0;
 }

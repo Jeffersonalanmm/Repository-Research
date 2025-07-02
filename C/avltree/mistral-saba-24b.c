@@ -163,17 +163,15 @@ void preOrder(Node *root) {
 }
 
 int main() {
-    Node *root = NULL;
+    Node* root = NULL;
 
-    int keys[1000];
-    for (int i = 0; i < 1000; i++) {
-        keys[i] = rand() % 10000;
-        root = insert(root, keys[i]);
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int value;
+    while (fscanf(f, "%d", &value) == 1) {
+        root = insert(root, value);
     }
-
-    root = deleteNode(root, keys[500]);
-
-    preOrder(root);
+    fclose(f);
 
     return 0;
 }

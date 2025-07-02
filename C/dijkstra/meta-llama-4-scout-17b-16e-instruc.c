@@ -135,34 +135,36 @@ void dijkstra(Graph* graph, int src) {
 }
 
 int main() {
-    // Generate 1000 random inputs
-    for (int i = 0; i < 1000; i++) {
-        int vertices = rand() % 100 + 1;
-        Graph* graph = createGraph(vertices);
-
-        for (int j = 0; j < vertices; j++) {
-            for (int k = 0; k < rand() % 10; k++) {
-                int dest = rand() % vertices;
-                int weight = rand() % 100 + 1;
-                addEdge(graph, j, dest, weight);
-            }
-        }
-
-        int src = rand() % vertices;
-        dijkstra(graph, src);
-
-        // Free graph
-        for (int j = 0; j < vertices; j++) {
-            Node* node = graph->adjLists[j];
-            while (node != NULL) {
-                Node* next = node->next;
-                free(node);
-                node = next;
-            }
-        }
-        free(graph->adjLists);
-        free(graph);
+    FILE *file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
     }
+
+    int numNodes = 1000; // Ajuste conforme o tamanho do grafo
+    Graph* graph = createGraph(numNodes);
+
+    int src, dest, weight;
+    while (fscanf(file, "%d %d %d", &src, &dest, &weight) == 3) {
+        if (src >= 0 && src < numNodes && dest >= 0 && dest < numNodes && weight >= 0) {
+            addEdge(graph, src, dest, weight);
+        }
+    }
+
+    fclose(file);
+
+    dijkstra(graph, 0);
+
+    // Liberação da memória
+    for (int i = 0; i < numNodes; i++) {
+        Node* node = graph->adjLists[i];
+        while (node != NULL) {
+            Node* next = node->next;
+            free(node);
+            node = next;
+        }
+    }
+    free(graph->adjLists);
+    free(graph);
 
     return 0;
 }

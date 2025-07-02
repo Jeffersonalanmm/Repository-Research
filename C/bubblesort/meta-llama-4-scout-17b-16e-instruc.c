@@ -20,13 +20,36 @@ void bubbleSort(int* arr, int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000;
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
     }
-    bubbleSort(arr, n);
-    free(arr);
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    if (array == NULL) {
+        fclose(f);
+        return 1;
+    }
+
+    int size = 0;
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (temp == NULL) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    bubbleSort(array, size);
+
+    free(array);
     return 0;
 }

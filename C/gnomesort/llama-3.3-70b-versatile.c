@@ -32,9 +32,20 @@ void generate_random_array(int arr[], int n) {
 }
 
 int main() {
-    int n = 1000;
-    int arr[n];
-    generate_random_array(arr, n);
-    gnome_sort(arr, n);
+    int arr[1000];
+    int size = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    gnome_sort(arr, size);
+
     return 0;
 }

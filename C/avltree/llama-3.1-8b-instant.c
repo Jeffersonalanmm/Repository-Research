@@ -197,22 +197,17 @@ Node* createAVLTree(int arr[], int size) {
 }
 
 // Function to test the AVL tree implementation
-void testAVLTree() {
-    int arr[] = {10, 20, 30, 40, 50, 25, 35, 45, 55, 15, 18, 22, 28, 32, 38, 42, 48, 52, 58, 12, 16, 19, 23, 27, 31, 37, 41, 47, 51, 57, 11, 14, 17, 21, 26, 29, 33, 36, 39, 43, 46, 49, 53, 56, 59, 13, 24, 34, 44, 54, 60};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    Node* root = createAVLTree(arr, size);
-    printf("In-order traversal: ");
-    inOrderTraversal(root);
-    printf("\n");
-    printf("Pre-order traversal: ");
-    preOrderTraversal(root);
-    printf("\n");
-    printf("Post-order traversal: ");
-    postOrderTraversal(root);
-    printf("\n");
-}
-
 int main() {
-    testAVLTree();
+    Node* root = NULL;
+
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int value;
+    while (fscanf(f, "%d", &value) == 1) {
+        root = insert(root, value);
+    }
+
+    fclose(f);
+
     return 0;
 }

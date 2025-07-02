@@ -61,23 +61,24 @@ void freeQueue(Queue* q) {
 }
 
 int main() {
-    srand(time(NULL));
-    Queue* q = createQueue();
-
-    for (int i = 0; i < 1000; i++) {
-        int data = rand() % 1000;
-        enqueue(q, data);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    int arr[1000];
-    int index = 0;
-
-    while (!isEmpty(q)) {
-        arr[index++] = dequeue(q);
+    Queue *q = createQueue(); 
+    if (!q) {
+        fclose(file);
+        return 1;
     }
 
-    freeQueue(q);
+    int num, count = 0;
+    while (count < 1000 && fscanf(file, "%d", &num) == 1) {
+        enqueue(q, num);
+        count++;
+    }
+    fclose(file);
 
-    // assertions or further processing can be done here
+    free(q); 
     return 0;
 }

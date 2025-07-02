@@ -18,7 +18,7 @@ typedef struct Queue {
 Node* createNode(int data) {
     Node* newNode = (Node*) malloc(sizeof(Node));
     if (!newNode) {
-        printf("Memory error\n");
+        //printf("Memory error\n");
         return NULL;
     }
     newNode->data = data;
@@ -30,7 +30,7 @@ Node* createNode(int data) {
 Queue* createQueue() {
     Queue* queue = (Queue*) malloc(sizeof(Queue));
     if (!queue) {
-        printf("Memory error\n");
+        //printf("Memory error\n");
         return NULL;
     }
     queue->front = NULL;
@@ -60,7 +60,7 @@ void enqueue(Queue* queue, int data) {
 // Function to remove an element from the queue
 int dequeue(Queue* queue) {
     if (isEmpty(queue)) {
-        printf("Queue is empty\n");
+        //printf("Queue is empty\n");
         return -1;
     }
     int data = queue->front->data;
@@ -77,7 +77,7 @@ int dequeue(Queue* queue) {
 // Function to get the front element of the queue
 int peek(Queue* queue) {
     if (isEmpty(queue)) {
-        printf("Queue is empty\n");
+        //printf("Queue is empty\n");
         return -1;
     }
     return queue->front->data;
@@ -104,6 +104,20 @@ void testQueue() {
 }
 
 int main() {
-    testQueue();
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    Queue q;
+    createQueue(&q);
+
+    int num, count = 0;
+    while (count < 1000 && fscanf(file, "%d", &num) == 1) {
+        enqueue(&q, num);
+        count++;
+    }
+    fclose(file);
+
     return 0;
 }

@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 void optimized_bubble_sort(int arr[], int n) {
     for (int i = 0; i < n - 1; ++i) {
         int swapped = 0;
@@ -20,9 +20,35 @@ void optimized_bubble_sort(int arr[], int n) {
 
 // Example usage
 int main() {
-    int arr[] = {5, 3, 8, 4, 2};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    optimized_bubble_sort(arr, n);
-    // The array is now sorted in ascending order
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
+    }
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    if (array == NULL) {
+        fclose(f);
+        return 1;
+    }
+
+    int size = 0;
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (temp == NULL) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    optimized_bubble_sort(array, size);
+    free(array);
     return 0;
 }

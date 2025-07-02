@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>//add by author
 
 #define MAX_ATTEMPTS 1000000  // Maximum number of sorting attempts
 
@@ -39,11 +40,31 @@ void bogoSort(int* array, int size) {
 
 // Example usage in main function
 int main() {
-    int array[1000];
-    // Initialize array with random values
-    for (int i = 0; i < 1000; i++) {
-        array[i] = rand() % 10000;  // Random number between 0 and 9999
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    // Lê os números do arquivo
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (temp == NULL) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
     }
-    bogoSort(array, 1000);
+
+    fclose(f);
+
+    // Ordena com bogoSort (atenção: é muito lento para arrays grandes)
+    bogoSort(array, size);
+    free(array);
     return 0;
 }

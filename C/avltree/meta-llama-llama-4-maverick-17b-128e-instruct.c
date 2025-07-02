@@ -98,13 +98,17 @@ Node* insertNode(Node* node, int key) {
     return rebalance(node);
 }
 
-// Function to test the AVL tree implementation
 int main() {
-    srand(time(NULL));
     Node* root = NULL;
-    for (int i = 0; i < 1000; i++) {
-        int key = rand() % 10000;
-        root = insertNode(root, key);
+// Function to test the AVL tree implementationint main() {
+
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int value;
+    while (fscanf(f, "%d", &value) == 1) {
+        root = insertNode(root, value);
     }
+    fclose(f);
+
     return 0;
 }

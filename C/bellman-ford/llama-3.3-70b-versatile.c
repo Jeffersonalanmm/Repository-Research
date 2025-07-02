@@ -76,6 +76,33 @@ void testBellmanFord() {
 }
 
 int main() {
-    testBellmanFord();
+    FILE* file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    int V, E;
+    if (fscanf(file, "%d %d", &V, &E) != 2) {
+        fclose(file);
+        return 1;
+    }
+
+    Graph* graph = createGraph(V, E);
+
+    for (int i = 0; i < E; i++) {
+        if (fscanf(file, "%d %d %d", &graph->edge[i].src, &graph->edge[i].dest, &graph->edge[i].weight) != 3) {
+            free(graph->edge);
+            free(graph);
+            fclose(file);
+            return 1;
+        }
+    }
+    fclose(file);
+
+    bellmanFord(graph, 0);
+
+    free(graph->edge);
+    free(graph);
+
     return 0;
 }

@@ -19,14 +19,19 @@ void shellSort(int arr[], int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int arr[n];
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 1000;
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
     }
 
     shellSort(arr, n);
+    fclose(file);
 
     return 0;
 }

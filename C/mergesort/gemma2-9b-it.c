@@ -51,12 +51,20 @@ void mergeSort(int arr[], int left, int right) {
 
 int main() {
     int arr[1000];
-    // Populate arr with 1000 random integers
-    for (int i = 0; i < 1000; i++) {
-        arr[i] = rand() % 1000;
+    int size = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    mergeSort(arr, 0, 999);
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    mergeSort(arr, 0, size - 1);
 
     return 0;
 }
+

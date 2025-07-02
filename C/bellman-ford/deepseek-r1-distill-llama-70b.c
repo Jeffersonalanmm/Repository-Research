@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h> //add by author
 
 #define INF 999999999
 #define VERTICES 1000
@@ -56,11 +57,28 @@ int* BellmanFord(Edge* edges, int numEdges, int numVertices, int source) {
 
 int main() {
     Edge* edges = (Edge*)malloc(EDGES * sizeof(Edge));
-    generateRandomEdges(edges, EDGES);
+    if (!edges) {
+        return 1;
+    }
+
+    FILE* file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        free(edges);
+        return 1;
+    }
+
+    for (int i = 0; i < EDGES; i++) {
+        if (fscanf(file, "%d %d %d", &edges[i].source, &edges[i].destination, &edges[i].weight) != 3) {
+            fclose(file);
+            free(edges);
+            return 1;
+        }
+    }
+
+    fclose(file);
+
     int* distances = BellmanFord(edges, EDGES, VERTICES, 0);
-    
-    // Example usage: Process distances here without printing
-    
+
     free(edges);
     free(distances);
     return 0;

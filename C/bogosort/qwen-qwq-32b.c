@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 
 void shuffle(int arr[], int n) {
     for (int i = n - 1; i > 0; i--) {
@@ -26,12 +27,39 @@ void bogoSort(int arr[], int n) {
 }
 
 int main() {
-    const int size = 1000;
-    int arr[size];
-    srand(time(0));
-    for (int i = 0; i < size; i++) {
-        arr[i] = rand() % 1000;
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
     }
-    bogoSort(arr, size);
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    if (array == NULL) {
+        fclose(f);
+        return 1;
+    }
+    int size = 0;
+
+    // Lê os números do arquivo
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (temp == NULL) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+
+    fclose(f);
+
+    // Ordena com bogoSort (atenção: é muito lento para arrays grandes)
+    bogoSort(array, size);
+
+    free(array);
     return 0;
 }

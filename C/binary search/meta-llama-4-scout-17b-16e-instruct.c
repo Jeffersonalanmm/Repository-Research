@@ -16,24 +16,42 @@ int binary_search(int arr[], int target, int low, int high) {
     return -1; // not found
 }
 
-int main() {
-    srand(time(NULL));
-    int arr[1000];
-    for (int i = 0; i < 1000; i++) {
-        arr[i] = rand() % 10000;
-    }
-    int target = arr[rand() % 1000];
+// Função de comparação para qsort
+int compare_ints(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
 
-    // sort the array
-    for (int i = 0; i < 1000; i++) {
-        for (int j = i + 1; j < 1000; j++) {
-            if (arr[i] > arr[j]) {
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+int main() {
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (!f) {
+        return 1;
+    }
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (!temp) {
+                free(array);
+                fclose(f);
+                return 1;
             }
+            array = temp;
         }
     }
+    fclose(f);
 
-    int result = binary_search(arr, target, 0, 999);
+    // Ordena o array antes da busca binária
+    qsort(array, size, sizeof(int), compare_ints);
+
+    int target = 42;  // Valor a ser buscado
+    int index = binary_search(array,target,0,size-1);
+
+    free(array);
+    return 0;
 }

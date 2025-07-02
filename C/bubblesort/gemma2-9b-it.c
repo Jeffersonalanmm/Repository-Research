@@ -3,12 +3,18 @@
 #include <time.h>
 
 int main() {
-  int arr[1000];
-  srand(time(NULL));
-
-  for (int i = 0; i < 1000; i++) {
-    arr[i] = rand() % 1000;
+  FILE* f = fopen("../../inputs.txt", "r");
+  if (f == NULL) {
+      return 1;
   }
+
+  int arr[1000];
+  for (int i = 0; i < 1000; i++) {
+      if (fscanf(f, "%d", &arr[i]) != 1) {
+          break;  // Para caso o arquivo tenha menos de 1000 valores
+      }
+  }
+  fclose(f);
 
   int n = sizeof(arr) / sizeof(arr[0]);
   for (int i = 0; i < n - 1; i++) {

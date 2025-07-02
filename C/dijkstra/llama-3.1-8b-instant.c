@@ -87,9 +87,9 @@ void dijkstra(Graph* graph, int startVertex) {
     }
 
     // Print the shortest distances from the start vertex to all other vertices
-    for (int i = 0; i < numVertices; i++) {
-        printf("Shortest distance from vertex %d to vertex %d: %d\n", startVertex, i, distances[i]);
-    }
+    //for (int i = 0; i < numVertices; i++) {
+    //    printf("Shortest distance from vertex %d to vertex %d: %d\n", startVertex, i, distances[i]);
+    //}
 }
 
 int main() {

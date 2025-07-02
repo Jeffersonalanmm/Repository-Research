@@ -54,18 +54,35 @@ void BellmanFord(Graph* graph, int src) {
 }
 
 int main() {
-    int V = NUM_VERTICES;
-    int E = NUM_EDGES;
-    Graph* graph = createGraph(V, E);
-
-    // Initialize edges randomly
-    for (int i = 0; i < E; i++) {
-        graph->edge[i].src = rand() % V;
-        graph->edge[i].dest = rand() % V;
-        graph->edge[i].weight = rand() % 10 - 5; // Random weight between -5 and 5
+    FILE* file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
     }
 
+    int V, E;
+    if (fscanf(file, "%d %d", &V, &E) != 2) {
+        fclose(file);
+        return 1;
+    }
+
+    Graph* graph = createGraph(V, E);
+    if (!graph || !graph->edge) {
+        fclose(file);
+        return 1;
+    }
+
+    for (int i = 0; i < E; i++) {
+        if (fscanf(file, "%d %d %d", &graph->edge[i].src, &graph->edge[i].dest, &graph->edge[i].weight) != 3) {
+            free(graph->edge);
+            free(graph);
+            fclose(file);
+            return 1;
+        }
+    }
+    fclose(file);
+
     BellmanFord(graph, 0);
+
 
     free(graph->edge);
     free(graph);

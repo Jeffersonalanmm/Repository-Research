@@ -54,21 +54,23 @@ void beadsort(int* array, int size) {
 int main() {
     srand(time(NULL));
 
-    // Generate 1000 random inputs
-    int size = 1000;
-    int* array = (int*)malloc(size * sizeof(int));
-    for (int i = 0; i < size; i++) {
-        array[i] = rand() % 1001; // Random numbers between 0 and 1000
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            array = (int*)realloc(array, capacity * sizeof(int));
+        }
     }
 
+    fclose(f);
+
     beadsort(array, size);
-
-    // Example usage (commented out to avoid print statements)
-    // for (int i = 0; i < size; i++) {
-    //     printf("%d ", array[i]);
-    // }
-    // printf("\n");
-
     free(array);
     return 0;
 }

@@ -74,6 +74,20 @@ void test_merge_sort() {
 }
 
 int main() {
-    test_merge_sort();
+    int arr[1000];
+    int size = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    merge_sort(arr, 0, size - 1);
+
     return 0;
 }

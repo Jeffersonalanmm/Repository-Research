@@ -3,12 +3,22 @@
 #include <time.h>
 
 int main() {
-  int arr[1000];
-  srand(time(NULL));
+    int arr[1000];
+    FILE *file = fopen("../../inputs.txt", "r");
 
-  for (int i = 0; i < 1000; i++) {
-    arr[i] = rand() % 1000;
-  }
+    if (!file) {
+      
+        return 1;
+    }
+
+    for (int i = 0; i < 1000; i++) {
+        if (fscanf(file, "%d", &arr[i]) != 1) {
+            fclose(file);
+            return 1;
+        }
+    }
+
+    fclose(file);
 
   for (int i = 0; i < 999; i++) {
     int minIndex = i;

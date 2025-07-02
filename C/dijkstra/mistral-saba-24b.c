@@ -119,17 +119,23 @@ void dijkstra(int graph[MAX_V][MAX_V], int src, int V) {
 
 int main() {
     int V = 1000;
-    int graph[MAX_V][MAX_V];
+    int graph[MAX_V][MAX_V] = {0};
 
-    // Initialize the graph with random values
-    for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            graph[i][j] = (rand() % 100); // Random values between 0 and 99
+    FILE *file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    int src, dest, weight;
+    while (fscanf(file, "%d %d %d", &src, &dest, &weight) == 3) {
+        if (src >= 0 && src < V && dest >= 0 && dest < V && weight >= 0) {
+            graph[src][dest] = weight;
         }
     }
 
-    int src = 0; // Source vertex
-    dijkstra(graph, src, V);
+    fclose(file);
+
+    dijkstra(graph, 0, V);
 
     return 0;
 }

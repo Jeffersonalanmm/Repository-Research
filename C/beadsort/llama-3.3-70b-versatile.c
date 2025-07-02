@@ -86,10 +86,26 @@ void generateRandomNumbers(int* array, int size) {
 
 
 int main() {
-    int size = 1000;
-    int* array = (int*) malloc(size * sizeof(int));
-    generateRandomNumbers(array, size);
+    srand(time(NULL));
+
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            array = (int*)realloc(array, capacity * sizeof(int));
+        }
+    }
+
+    fclose(f);
+
     beadSort(array, size);
+
     free(array);
     return 0;
 }

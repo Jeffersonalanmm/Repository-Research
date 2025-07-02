@@ -67,17 +67,35 @@ int isSorted(int arr[], int n) {
 
 // Driver code
 int main() {
-    int arr[] = {4, 3, 2, 10, 12, 1, 5, 6};
-    int n = sizeof(arr) / sizeof(arr[0]);
-
-    cycleSort(arr, n);
-
-    // Check if the array is sorted
-    if (isSorted(arr, n)) {
-        printf("Array is sorted\n");
-    } else {
-        printf("Array is not sorted\n");
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
     }
 
+    int capacity = 1000;
+    int* array = malloc(capacity * sizeof(int));
+    if (!array) {
+        fclose(f);
+        return 1;
+    }
+
+    int size = 0;
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (!temp) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    cycleSort(array, size);
+    free(array);
     return 0;
 }

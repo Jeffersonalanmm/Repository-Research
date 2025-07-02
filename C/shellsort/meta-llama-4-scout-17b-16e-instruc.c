@@ -20,16 +20,21 @@ void shellSort(int* arr, int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
 
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000;
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
     }
 
     shellSort(arr, n);
-
-    free(arr);
+    fclose(file);
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
     return 0;
 }

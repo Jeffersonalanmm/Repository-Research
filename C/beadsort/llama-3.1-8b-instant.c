@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <time.h> //add by author
 // Structure to represent a bead
 typedef struct Bead {
     int value;
@@ -93,12 +93,27 @@ void beadSort(int* values, int n) {
 }
 
 int main() {
-    int n = 1000;
-    int* values = (int*) malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        values[i] = rand() % 1000;
+    srand(time(NULL));
+
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            array = (int*)realloc(array, capacity * sizeof(int));
+        }
     }
-    beadSort(values, n);
-    free(values);
+
+    fclose(f);
+
+    beadSort(array, size);
+
+
+    free(array);
     return 0;
 }

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h> //add by author
 
 typedef struct Node {
     int key;
@@ -121,16 +122,16 @@ void free_tree(Node* node) {
 }
 
 int main() {
-    srand(time(NULL));
     Node* root = NULL;
-    for (int i = 0; i < 1000; i++) {
-        int key = rand() % 10000;
-        root = insert(root, key);
+
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int value;
+    while (fscanf(f, "%d", &value) == 1) {
+        root = insert(root, value);
     }
-    for (int i = 0; i < 500; i++) {
-        int key = rand() % 10000;
-        root = delete_node(root, key);
-    }
-    free_tree(root);
+  
+    fclose(f);
+
     return 0;
 }

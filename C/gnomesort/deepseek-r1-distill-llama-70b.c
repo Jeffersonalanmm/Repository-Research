@@ -23,11 +23,22 @@ void gnome_sort_optimized(int arr[], int size) {
     } while (swapped);
 }
 
-// Example usage with 1000 random inputs (demonstrated with a smaller set for brevity)
 int main() {
-    int arr[] = {5, 3, 2, 4, 1};
-    int size = sizeof(arr) / sizeof(arr[0]);
+    int arr[1000];
+    int size = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
     gnome_sort_optimized(arr, size);
+
     for (int i = 0; i < size; ++i) {
         printf("%d ", arr[i]);
     }

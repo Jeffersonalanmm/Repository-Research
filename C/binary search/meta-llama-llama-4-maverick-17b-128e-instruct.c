@@ -41,20 +41,36 @@ int* generateRandomSortedArray(int n) {
 }
 
 int main() {
-    srand(time(NULL)); // Seed for random number generation
-
-    int n = 1000; // Number of elements in the array
-    int* arr = generateRandomSortedArray(n);
-
-    // Perform Binary Search on the generated array
-    int target = arr[rand() % n]; // Choose a random target from the array
-    int result = binarySearch(arr, target, 0, n - 1);
-
-    // To avoid using printf, we can verify the result by checking if it's within bounds
-    if (result >= 0 && result < n) {
-        // Do nothing, just verify
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (!f) {
+        return 1;
     }
 
-    free(arr); // Deallocate the dynamically allocated memory
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (!temp) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    // Ordena o array antes da busca binária
+    qsort(array, size, sizeof(int), compare);
+
+    int target = 42;  // Valor a ser buscado
+    int index = binarySearch(array, target,0, size-1);
+
+    free(array);
     return 0;
 }

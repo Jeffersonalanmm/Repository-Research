@@ -40,21 +40,43 @@ int* create_sorted_array(int n) {
     return arr;
 }
 
-int main() {
-    int n = 1000;
-    int* arr = create_sorted_array(n);
+// Função de comparação para qsort
+int compare_ints(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
 
-    // Test the binary search function
-    for (int i = 0; i < n; i++) {
-        int result = binary_search(arr, n, i);
-        // If the result is not -1, then the element was found
-        if (result != -1) {
-            // Do nothing
-        } else {
-            // If the result is -1, then the element was not found
-        }
+int main() {
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (!f) {
+        return 1;
     }
 
-    free(arr);
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (!temp) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    // Ordena o array antes da busca binária
+    qsort(array, size, sizeof(int), compare_ints);
+
+    int target = 42;  // Valor a ser buscado
+    int index = binary_search(array, size, target);
+
+
+    free(array);
     return 0;
 }

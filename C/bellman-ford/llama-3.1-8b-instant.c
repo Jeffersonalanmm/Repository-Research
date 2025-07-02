@@ -47,33 +47,39 @@ void bellmanFord(Graph* graph, int src) {
     for (int u = 0; u < graph->V; u++) {
         for (int v = 0; v < graph->V; v++) {
             if (graph->graph[u][v] != 0 && dist[u] != INF && dist[u] + graph->graph[u][v] < dist[v]) {
-                printf("Graph contains a negative-weight cycle\n");
                 return;
             }
         }
     }
 
-    // Print the shortest distances
-    printf("Vertex Distance from Source\n");
-    for (int i = 0; i < graph->V; i++) {
-        printf("%d \t\t %d\n", i, dist[i]);
-    }
 }
 
 int main() {
-    int V = 5;
+    FILE* file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    int V;
+    fscanf(file, "%d", &V);  // A primeira linha do arquivo deve conter o número de vértices
+
     Graph* graph = createGraph(V);
 
-    addEdge(graph, 0, 1, -1);
-    addEdge(graph, 0, 2, 4);
-    addEdge(graph, 1, 2, 3);
-    addEdge(graph, 1, 3, 2);
-    addEdge(graph, 1, 4, 2);
-    addEdge(graph, 3, 2, 5);
-    addEdge(graph, 3, 1, 1);
-    addEdge(graph, 4, 3, -3);
+    // Inicializa a matriz com 0s (nenhuma aresta)
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            graph->graph[i][j] = 0;
+        }
+    }
 
-    bellmanFord(graph, 0);
+    int u, v, w;
+    while (fscanf(file, "%d %d %d", &u, &v, &w) == 3) {
+        addEdge(graph, u, v, w);
+    }
+
+    fclose(file);
+
+    bellmanFord(graph, 0); // Origem fixa no vértice 0
 
     return 0;
 }

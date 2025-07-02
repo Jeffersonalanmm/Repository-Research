@@ -42,15 +42,21 @@ void heapSort(int arr[], int n) {
 }
 
 int main() {
-    const int size = 1000;
-    int arr[size];
-    srand(time(NULL));
+    int arr[1000];
+    int size = 0;
 
-    for (int i =0; i < size; i++) {
-        arr[i] = rand() % 10000;
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
     heapSort(arr, size);
+
 
     return 0;
 }

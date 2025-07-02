@@ -79,25 +79,20 @@ int compareArrays(int* arr1, int* arr2, int n) {
 }
 
 int main() {
-    srand(time(NULL)); // seed for random number generation
+    int arr[1000];
+    int size = 0;
 
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
-    int* arrSorted = (int*)malloc(n * sizeof(int));
-
-    generateRandomArray(arr, n);
-    memcpy(arrSorted, arr, n * sizeof(int));
-
-    testMergeSort(arr, n);
-
-    if (compareArrays(arr, arrSorted, n)) {
-        printf("Merge sort implementation is correct\n");
-    } else {
-        printf("Merge sort implementation is incorrect\n");
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    free(arr);
-    free(arrSorted);
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    testMergeSort(arr, size);
 
     return 0;
 }

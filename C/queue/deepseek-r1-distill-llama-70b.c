@@ -74,3 +74,22 @@ void testQueue() {
         printf("Dequeued: %d\n", dequeue(&q));
     }
 }
+
+int main() {
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    Queue q;
+    initQueue(&q);
+
+    int num, count = 0;
+    while (count < 1000 && fscanf(file, "%d", &num) == 1) {
+        enqueue(&q, num);
+        count++;
+    }
+    fclose(file);
+
+    return 0;
+}

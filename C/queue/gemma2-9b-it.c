@@ -26,7 +26,7 @@ int isFull(Queue* q) {
 
 void enqueue(Queue* q, int value) {
     if (isFull(q)) {
-        printf("Queue Overflow\n");
+        //printf("Queue Overflow\n");
         return;
     }
     if (isEmpty(q)) {
@@ -38,7 +38,7 @@ void enqueue(Queue* q, int value) {
 
 int dequeue(Queue* q) {
     if (isEmpty(q)) {
-        printf("Queue Underflow\n");
+        //printf("Queue Underflow\n");
         return -1;
     }
     int value = q->data[q->front];
@@ -51,17 +51,20 @@ int dequeue(Queue* q) {
 }
 
 int main() {
-    srand(time(NULL));
-    Queue* q = createQueue();
-
-    for (int i = 0; i < 1000; i++) {
-        int value = rand() % 100;
-        enqueue(q, value);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    for (int i = 0; i < 1000; i++) {
-        dequeue(q);
+    Queue q;
+    createQueue(&q);
+
+    int num, count = 0;
+    while (count < 1000 && fscanf(file, "%d", &num) == 1) {
+        enqueue(&q, num);
+        count++;
     }
+    fclose(file);
 
     return 0;
 }

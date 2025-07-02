@@ -17,19 +17,35 @@ void cycleSort(int arr[], int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        arr[i] = i + 1;
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
     }
-    for (int i = 0; i < n; i++) {
-        int r = rand() % n;
-        int temp = arr[i];
-        arr[i] = arr[r];
-        arr[r] = temp;
+
+    int capacity = 1000;
+    int* array = malloc(capacity * sizeof(int));
+    if (!array) {
+        fclose(f);
+        return 1;
     }
-    cycleSort(arr, n);
-    free(arr);
+
+    int size = 0;
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (!temp) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    cycleSort(array, size);
+    free(array);
     return 0;
 }

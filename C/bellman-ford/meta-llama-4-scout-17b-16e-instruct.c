@@ -51,21 +51,37 @@ int bellmanFord(Graph* graph, int src) {
 }
 
 int main() {
-    srand(time(NULL));
-    int V = 10;
-    int E = 1000;
-    Graph* graph = createGraph(V, E);
-
-    for (int i = 0; i < E; i++) {
-        graph->edges[i].src = rand() % V;
-        graph->edges[i].dest = rand() % V;
-        graph->edges[i].weight = rand() % 100 - 50; // Random weight between -50 and 50
+    FILE* file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    int src = rand() % V;
-    int result = bellmanFord(graph, src);
+    int V, E;
+    if (fscanf(file, "%d %d", &V, &E) != 2) {
+        fclose(file);
+        return 1;
+    }
+
+    Graph* graph = createGraph(V, E);
+    if (!graph || !graph->edges) {
+        fclose(file);
+        return 1;
+    }
+
+    for (int i = 0; i < E; i++) {
+        if (fscanf(file, "%d %d %d", &graph->edges[i].src, &graph->edges[i].dest, &graph->edges[i].weight) != 3) {
+            free(graph->edges);
+            free(graph);
+            fclose(file);
+            return 1;
+        }
+    }
+    fclose(file);
+
+    int result = bellmanFord(graph, 0);
+
     free(graph->edges);
     free(graph);
 
-    return result;
+    return 0;
 }

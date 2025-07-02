@@ -34,14 +34,20 @@ void heapSort(int* arr, int n) {
 }
 
 int main() {
-    srand(time(NULL));
     int arr[1000];
-    for (int i = 0; i < 1000; i++)
-        arr[i] = rand() % 1000;
+    int size = 0;
 
-    int n = sizeof(arr) / sizeof(arr[0]);
-    heapSort(arr, n);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
 
-    // return 0 without printing
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    heapSort(arr, size);
+
     return 0;
 }

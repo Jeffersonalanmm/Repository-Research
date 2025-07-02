@@ -38,10 +38,40 @@ void generate_random_array(int* arr, int n) {
 }
 
 int main() {
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
-    generate_random_array(arr, n);
-    bogo_sort(arr, n);
-    free(arr);
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
+    }
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    if (array == NULL) {
+        fclose(f);
+        return 1;
+    }
+    int size = 0;
+
+    // Lê os números do arquivo
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (temp == NULL) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+
+    fclose(f);
+
+    // Ordena com bogoSort (atenção: é muito lento para arrays grandes)
+    bogo_sort(array, size);
+
+
+    free(array);
     return 0;
 }

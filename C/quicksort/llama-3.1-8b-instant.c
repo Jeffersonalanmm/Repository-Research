@@ -46,11 +46,20 @@ void testQuickSort(int arr[], int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
-    generateRandomArray(arr, n);
-    testQuickSort(arr, n);
-    free(arr);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+
+    quickSort(arr, 0, n - 1);
+    
+    fclose(file);
+
     return 0;
 }

@@ -71,14 +71,32 @@ void patienceSort(int *arr, int n) {
 }
 
 int main() {
-    int n = 1000;
-    int *arr = (int*)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000; // Random inputs
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        fprintf(stderr, "Erro ao abrir o arquivo ../../inputs.txt\n");
+        return 1;
     }
 
-    patienceSort(arr, n);
+    int arr[1000];
+    int n = 0;
 
-    free(arr);
+    while (n < 1000 && fscanf(file, "%d", &arr[n]) == 1) {
+        n++;
+    }
+    fclose(file);
+
+    if (n == 0) {
+        fprintf(stderr, "Nenhum dado lido do arquivo.\n");
+        return 1;
+    }
+
+    patienceSort(arr, n);  // Ordena o array arr in-place
+
+    // Imprimir para verificar
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
     return 0;
 }

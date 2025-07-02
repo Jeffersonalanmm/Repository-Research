@@ -53,14 +53,19 @@ void merge_sort(int* arr, int left, int right) {
 }
 
 int main() {
-    srand(time(NULL));
     int arr[1000];
-    for (int i = 0; i < 1000; i++) {
-        arr[i] = rand() % 1000;
+    int size = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    merge_sort(arr, 0, 999);
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
 
-    // No print statements
+    merge_sort(arr, 0, size - 1);
     return 0;
 }

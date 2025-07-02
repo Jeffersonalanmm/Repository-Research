@@ -19,13 +19,18 @@ void selection_sort(int* arr, int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000;
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
+    int arr[1000];
+    int n = 0;
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+
     selection_sort(arr, n);
-    free(arr);
+    fclose(file);
     return 0;
 }

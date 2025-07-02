@@ -26,16 +26,19 @@ void shell_sort(int* array, int size) {
 }
 
 int main() {
-    srand(time(NULL));
-    int size = 1000;
-    int* array = (int*) malloc(size * sizeof(int));
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
 
-    for (int i = 0; i < size; i++) {
-        array[i] = rand() % 10000;
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
     }
 
-    shell_sort(array, size);
+    shell_sort(arr, n);
+    fclose(file);
 
-    free(array);
     return 0;
 }

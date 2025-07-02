@@ -62,10 +62,35 @@ int is_sorted(int arr[], int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int arr[n];
-    generate_random_array(arr, n);
-    cycle_sort(arr, n);
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
+    }
+
+    int capacity = 1000;
+    int* array = malloc(capacity * sizeof(int));
+    if (!array) {
+        fclose(f);
+        return 1;
+    }
+
+    int size = 0;
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (!temp) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    cycle_sort(array, size);
+    free(array);
     return 0;
 }

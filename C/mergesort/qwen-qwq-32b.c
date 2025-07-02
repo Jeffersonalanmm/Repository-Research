@@ -74,25 +74,20 @@ void mergeSortWrapper(int arr[], int n) {
 }
 
 int main() {
-    const int n = 1000;
-    int *arr = (int*)malloc(n * sizeof(int));
-    if (!arr) {
-        return 1;
-    }
-    srand(time(NULL));
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000; // or some range
-    }
+    int arr[1000];
+    int n = 0;
 
-    int *temp = (int*)malloc(n * sizeof(int));
-    if (!temp) {
-        free(arr);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
         return 1;
     }
 
-    mergeSort(arr, 0, n-1, temp);
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+    fclose(file);
 
-    free(temp);
-    free(arr);
+    mergeSortWrapper(arr, n);
+
     return 0;
 }

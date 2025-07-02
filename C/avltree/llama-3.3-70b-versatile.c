@@ -144,7 +144,15 @@ void deleteAllNodes(Node* node) {
 
 int main() {
     Node* root = NULL;
-    generateRandomInputs(&root);
-    deleteAllNodes(root);
+
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int value;
+    while (fscanf(f, "%d", &value) == 1) {
+        root = insert(root, value);
+    }
+    
+    fclose(f);
+
     return 0;
 }

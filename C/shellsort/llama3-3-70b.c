@@ -50,9 +50,19 @@ int is_sorted(int array[], int n) {
 }
 
 int main() {
-    int n = 1000;
-    int array[n];
-    generate_random_array(array, n);
-    shell_sort(array, n);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+
+    shell_sort(arr, n);
+    fclose(file);
+
     return 0;
 }

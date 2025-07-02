@@ -144,11 +144,11 @@ void dijkstra(int** graph, int src) {
     }
 
     // Use the calculated distances as needed, for example, store them in a file or pass them to another function
-    FILE* file = fopen("distances.txt", "w");
-    for (int i = 0; i < V; i++) {
-        fprintf(file, "%d ", dist[i]);
-    }
-    fclose(file);
+   // FILE* file = fopen("distances.txt", "w");
+    //for (int i = 0; i < V; i++) {
+    //    fprintf(file, "%d ", dist[i]);
+  //  }
+    //fclose(file);
 
     free(dist);
     free(minHeap->pos);
@@ -157,21 +157,30 @@ void dijkstra(int** graph, int src) {
 }
 
 int main() {
-    // Generate a random graph with 1000 vertices
+    FILE *file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
     int** graph = (int**)malloc(sizeof(int*) * V);
     for (int i = 0; i < V; i++) {
         graph[i] = (int*)malloc(sizeof(int) * V);
         for (int j = 0; j < V; j++) {
-            if (i == j)
-                graph[i][j] = 0;
-            else
-                graph[i][j] = rand() % 10 + 1; // Random weight between 1 and 10
+            graph[i][j] = 0;
         }
     }
 
+    int src, dest, weight;
+    while (fscanf(file, "%d %d %d", &src, &dest, &weight) == 3) {
+        if (src >= 0 && src < V && dest >= 0 && dest < V && weight >= 0) {
+            graph[src][dest] = weight;
+        }
+    }
+
+    fclose(file);
+
     dijkstra(graph, 0);
 
-    // Free the allocated memory for the graph
     for (int i = 0; i < V; i++) {
         free(graph[i]);
     }

@@ -81,18 +81,21 @@ void freeMemory(Pile* pile) {
 }
 
 int main() {
-    // Create a deck of cards
-    Card cards[1000];
-    for (int i = 0; i < 1000; i++) {
-        cards[i].value = rand() % 13 + 1;
-        cards[i].suit[0] = 'S'; // Suit is not used in this implementation
+    int arr[MAX_SIZE];
+    int n = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    // Implement Patience Sort
-    Pile* sorted = patienceSort(cards, 1000);
+    while (n < MAX_SIZE && fscanf(file, "%d", &arr[n]) == 1) {
+        n++;
+    }
+    fclose(file);
 
-    // Free memory
-    freeMemory(sorted);
+    patienceSort(arr, n);
 
+    // Opcional: imprimir o array ordenado para verificar
     return 0;
 }

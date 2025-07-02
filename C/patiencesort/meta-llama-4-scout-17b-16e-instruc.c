@@ -80,12 +80,32 @@ int patience_sort(int* arr, int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int* arr = generate_random_array(n);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        fprintf(stderr, "Erro ao abrir o arquivo ../../inputs.x\n");
+        return 1;
+    }
+
+    int arr[1000];
+    int n = 0;
+
+    while (n < 1000 && fscanf(file, "%d", &arr[n]) == 1) {
+        n++;
+    }
+    fclose(file);
+
+    if (n == 0) {
+        fprintf(stderr, "Nenhum dado lido do arquivo.\n");
+        return 1;
+    }
+
     patience_sort(arr, n);
-    qsort(arr, n, sizeof(int), compare);
-    // Verification code can be added here
-    free(arr);
+
+    // Opcional: imprimir para verificar
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
     return 0;
 }

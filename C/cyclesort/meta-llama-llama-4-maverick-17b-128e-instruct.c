@@ -44,9 +44,35 @@ int* generateRandomArray(int n) {
 }
 
 int main() {
-    int n = 1000;
-    int* arr = generateRandomArray(n);
-    cycleSort(arr, n);
-    free(arr);
+    FILE* f = fopen("../../inputs.txt", "r");
+    if (f == NULL) {
+        return 1;
+    }
+
+    int capacity = 1000;
+    int* array = malloc(capacity * sizeof(int));
+    if (!array) {
+        fclose(f);
+        return 1;
+    }
+
+    int size = 0;
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            int* temp = realloc(array, capacity * sizeof(int));
+            if (!temp) {
+                free(array);
+                fclose(f);
+                return 1;
+            }
+            array = temp;
+        }
+    }
+    fclose(f);
+
+    cycleSort(array, size);
+    free(array);
     return 0;
 }

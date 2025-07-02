@@ -127,21 +127,27 @@ void dijkstra(Graph* graph, int src) {
 
 // Example usage
 int main() {
-    int numNodes = 5;
-    Graph* graph = createGraph(numNodes);
-    
-    addEdge(graph, 0, 1, 4);
-    addEdge(graph, 0, 2, 1);
-    addEdge(graph, 1, 3, 1);
-    addEdge(graph, 2, 1, 2);
-    addEdge(graph, 2, 3, 5);
-    addEdge(graph, 3, 4, 3);
-    
-    dijkstra(graph, 0);
-    
-    for (int i = 0; i < numNodes; i++) {
-        printf("Shortest distance from node 0 to node %d: %d\n", i, graph->distances[i]);
+    FILE *file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
     }
-    
+
+    int numNodes = 1000; // Supondo que o número máximo de nós seja 1000, ajuste se necessário
+    Graph* graph = createGraph(numNodes);
+
+    int src, dest, weight;
+    while (fscanf(file, "%d %d %d", &src, &dest, &weight) == 3) {
+        if (src >= 0 && src < numNodes && dest >= 0 && dest < numNodes) {
+            addEdge(graph, src, dest, weight);
+            // Se o grafo for não dirigido, também adiciona a aresta inversa:
+            // addEdge(graph, dest, src, weight);
+        }
+    }
+
+    fclose(file);
+
+    dijkstra(graph, 0);
+
     return 0;
 }
+

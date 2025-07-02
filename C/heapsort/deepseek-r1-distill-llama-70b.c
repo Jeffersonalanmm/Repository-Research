@@ -70,6 +70,20 @@ void test_heap_sort() {
 }
 
 int main() {
-    test_heap_sort();
+    int arr[1000];
+    int size = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    heap_sort(arr, size);
+
     return 0;
 }

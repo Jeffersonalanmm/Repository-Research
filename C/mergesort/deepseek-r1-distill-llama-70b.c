@@ -67,8 +67,20 @@ void sortArray(int *array, int size) {
 
 // Example usage
 int main() {
-    int array[] = {5, 2, 8, 3, 1, 6, 4};
-    int size = sizeof(array) / sizeof(array[0]);
-    sortArray(array, size);
+    int arr[1000];
+    int size = 0;
+
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    sortArray(arr, size);
+
     return 0;
 }

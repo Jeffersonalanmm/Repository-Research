@@ -44,18 +44,17 @@ void bellmanFord(Graph* graph, int src) {
         int v = graph->edge[i].dest;
         int weight = graph->edge[i].weight;
         if (dist[u] != INT_MAX && dist[u] + weight < dist[v]) {
-            printf("Graph contains negative weight cycle\n");
             return;
         }
     }
 
     // Print the shortest distances from the source vertex
-    for (int i = 0; i < V; i++) {
-        if (dist[i] == INT_MAX)
-            printf("Vertex %d is unreachable\n", i);
-        else
-            printf("Distance from source to vertex %d is %d\n", i, dist[i]);
-    }
+    //for (int i = 0; i < V; i++) {
+   //     if (dist[i] == INT_MAX)
+            //printf("Vertex %d is unreachable\n", i);
+    //    else
+            //printf("Distance from source to vertex %d is %d\n", i, dist[i]);
+    //}
 }
 
 int main() {

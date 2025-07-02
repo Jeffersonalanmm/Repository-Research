@@ -18,15 +18,21 @@ void gnomeSort(int arr[], int n) {
 }
 
 int main() {
-    srand(time(0));
-    int n = 1000;
-    int arr[n];
+    int arr[1000];
+    int size = 0;
 
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000;
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
 
-    gnomeSort(arr, n);
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
+
+    gnomeSort(arr, size);
+
 
     return 0;
 }

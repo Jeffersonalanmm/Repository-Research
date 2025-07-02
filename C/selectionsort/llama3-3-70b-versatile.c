@@ -43,8 +43,19 @@ int isSorted(int array[], int size) {
 }
 
 int main() {
-    int array[1000];
-    generateRandomArray(array, 1000);
-    selectionSort(array, 1000);
-    return isSorted(array, 1000);
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+
+    selectionSort(arr, n);
+    fclose(file);
+
+    return 0;
 }

@@ -305,6 +305,23 @@ void test_red_black_tree() {
 }
 
 int main() {
-    test_red_black_tree();
+    FILE* file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        fprintf(stderr, "Erro ao abrir o arquivo '../../inputs.txt'\n");
+        return 1;
+    }
+
+    RedBlackTree tree;
+    tree.root = NULL;
+
+    int key;
+    int count = 0;
+    while (count < 1000 && fscanf(file, "%d", &key) == 1) {
+        insert_and_rebalance(&tree, key);
+        count++;
+    }
+
+    fclose(file);
+    printf("Inserção completa: %d chaves adicionadas à árvore rubro-negra.\n", count);
     return 0;
 }

@@ -52,14 +52,26 @@ int patience_sort(int arr[], int size) {
 }
 
 int main() {
-  int arr[MAX_SIZE];
-  srand(time(NULL));
+    int arr[MAX_SIZE];
+    int n = 0;
 
-  for (int i = 0; i < MAX_SIZE; i++) {
-    arr[i] = rand() % 1000;
-  }
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
 
-  patience_sort(arr, MAX_SIZE);
+    while (n < MAX_SIZE && fscanf(file, "%d", &arr[n]) == 1) {
+        n++;
+    }
+    fclose(file);
 
-  return 0;
+    patience_sort(arr, n);
+
+    // Opcional: imprimir o array ordenado para verificar
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
 }

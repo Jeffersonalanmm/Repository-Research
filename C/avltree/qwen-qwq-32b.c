@@ -178,20 +178,16 @@ AVLNode* newNode(int key) {
 // The AVLNode structure and functions as above.
 
 int main() {
-    AVLNode *root = NULL;
-    srand(time(NULL));
+    Node* root = NULL;
 
-    // Insert 1000 random keys
-    for (int i = 0; i < 1000; i++) {
-        int key = rand() % 10000; // Random key between 0-9999
-        root = insert(root, key);
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int value;
+    while (fscanf(f, "%d", &value) == 1) {
+        root = insert(root, value);
     }
 
-    // Maybe some deletions? Or just insertions?
-
-    // Then maybe delete some keys, but the user didn't specify. Since the user's question is about the AVL implementation, perhaps just inserting 1000 keys is sufficient for the test.
-
-    // The code doesn't need to print anything, so the main function just runs the test.
+    fclose(f);
 
     return 0;
 }

@@ -99,23 +99,34 @@ int* patienceSort(int* arr, int n) {
 }
 
 int main() {
-    srand(time(NULL));
-    int n = 1000;
-    int* arr = (int*)malloc(sizeof(int) * n);
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 10000;
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        fprintf(stderr, "Erro ao abrir o arquivo ../../inputs.txt\n");
+        return 1;
     }
 
-    int* sortedArr = patienceSort(arr, n);
+    int arr[1000];
+    int n = 0;
 
-    // Use the sorted array
-    int sum = 0;
-    for (int i = 0; i < n; i++) {
-        sum += sortedArr[i];
+    while (n < 1000 && fscanf(file, "%d", &arr[n]) == 1) {
+        n++;
+    }
+    fclose(file);
+
+    if (n == 0) {
+        fprintf(stderr, "Nenhum dado lido do arquivo.\n");
+        return 1;
     }
 
-    free(arr);
-    free(sortedArr);
+    int* sorted = patienceSort(arr, n);  // Corrigido nome da função e uso do retorno
+
+    // Imprimir para verificar
+    for (int i = 0; i < n; i++) {
+        printf("%d ", sorted[i]);
+    }
+    printf("\n");
+
+    free(sorted);  // Libera o array alocado dinamicamente
 
     return 0;
 }

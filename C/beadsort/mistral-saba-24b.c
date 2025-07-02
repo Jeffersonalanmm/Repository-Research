@@ -1,4 +1,4 @@
-```c
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -38,18 +38,27 @@ void beadsort(int *arr, int n) {
 }
 
 int main() {
-    srand(time(0));
-    int n = 1000;
-    int *arr = (int *)malloc(n * sizeof(int));
+    srand(time(NULL));
 
-    // Generate random inputs
-    for (int i = 0; i < n; i++) {
-        arr[i] = rand() % 1000; // Random values between 0 and 999
+    FILE* f = fopen("../../inputs.txt", "r");
+
+    int capacity = 1000;
+    int* array = (int*)malloc(capacity * sizeof(int));
+    int size = 0;
+
+    while (fscanf(f, "%d", &array[size]) == 1) {
+        size++;
+        if (size >= capacity) {
+            capacity *= 2;
+            array = (int*)realloc(array, capacity * sizeof(int));
+        }
     }
 
-    beadsort(arr, n);
+    fclose(f);
 
-    free(arr);
+    beadsort(array, size);
+
+
+    free(array);
     return 0;
 }
-```

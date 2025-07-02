@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define ARRAY_SIZE 1000
+#define ARRAY_SIZE 2
 
 int cycle_sort(int arr[], int n) {
     int cycles = 0;
@@ -32,6 +32,6 @@ int main() {
 
     int cycles = cycle_sort(arr, ARRAY_SIZE);
 
-    printf("Cycles: %d\n", cycles);
+
     return 0;
 }

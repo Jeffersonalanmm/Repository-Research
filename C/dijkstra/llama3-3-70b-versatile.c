@@ -100,23 +100,32 @@ void dijkstra(Graph* graph, int src) {
 }
 
 int main() {
-    // Create a graph with 1000 vertices
-    Graph* graph = createGraph(1000);
-    // Add edges to the graph with random weights
-    for (int i = 0; i < 1000; i++) {
-        for (int j = 0; j < 1000; j++) {
-            if (i != j) {
-                addEdge(graph, i, j, rand() % 100 + 1);
-            }
+    FILE *file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    int numNodes = 1000; // Ajuste conforme necessário
+    Graph* graph = createGraph(numNodes);
+
+    // Garante que a diagonal seja 0 (distância de um vértice para ele mesmo)
+    for (int i = 0; i < numNodes; i++) {
+        graph->adjMatrix[i][i] = 0;
+    }
+
+    int src, dest, weight;
+    while (fscanf(file, "%d %d %d", &src, &dest, &weight) == 3) {
+        // Protege contra pesos inválidos (negativos causam problema em Dijkstra)
+        if (src >= 0 && src < numNodes && dest >= 0 && dest < numNodes && weight >= 0) {
+            addEdge(graph, src, dest, weight);
+            // addEdge(graph, dest, src, weight); // Se grafo não dirigido
         }
     }
-    // Run Dijkstra's algorithm from a random source vertex
-    dijkstra(graph, rand() % 1000);
-    // Free the graph
-    for (int i = 0; i < 1000; i++) {
-        free(graph->adjMatrix[i]);
-    }
-    free(graph->adjMatrix);
-    free(graph);
+
+    fclose(file);
+
+    dijkstra(graph, 0);
+
     return 0;
 }
+

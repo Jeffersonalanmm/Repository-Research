@@ -61,6 +61,25 @@ void testQueue() {
 }
 
 int main() {
-    testQueue();
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+
+    Queue *q = createQueue(1000); 
+    if (!q) {
+        fclose(file);
+        return 1;
+    }
+
+    int num, count = 0;
+    while (count < 1000 && fscanf(file, "%d", &num) == 1) {
+        enqueue(q, num);
+        count++;
+    }
+    fclose(file);
+
+    free(q); 
     return 0;
 }
+

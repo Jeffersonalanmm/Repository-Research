@@ -29,28 +29,37 @@ void bellmanFord(int numNodes, Edge* edges, int source) {
     for (int j = 0; j < numNodes; j++) {
         for (int k = 0; k < numNodes; k++) {
             if (edges[k].source == j && edges[k].destination == i && dist[j] != INF && dist[j] + edges[k].weight < dist[i]) {
-                printf("Graph contains negative cycle\n");
                 return;
             }
         }
     }
 }
 
+#define EDGES 4000
+#define VERTICES 1000
+
 int main() {
-    // Example usage:
-    int numNodes = 5;
-    Edge edges[] = {
-        {0, 1, -1},
-        {0, 2, 4},
-        {1, 2, 3},
-        {1, 3, 2},
-        {1, 4, 2},
-        {3, 2, 5},
-        {3, 1, 1},
-        {4, 3, -3}
-    };
+    Edge* edges = (Edge*)malloc(EDGES * sizeof(Edge));
 
-    bellmanFord(numNodes, edges, 0);
+    FILE* file = fopen("../../graph_input.txt", "r");
+    if (!file) {
+        free(edges);
+        return 1;
+    }
 
+    for (int i = 0; i < EDGES; i++) {
+        if (fscanf(file, "%d %d %d", &edges[i].source, &edges[i].destination, &edges[i].weight) != 3) {
+            fclose(file);
+            free(edges);
+            return 1;
+        }
+    }
+
+    fclose(file);
+
+    bellmanFord(VERTICES, edges, 0);
+
+    free(edges);
     return 0;
 }
+

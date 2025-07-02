@@ -28,11 +28,20 @@ void quickSort(int* arr, int low, int high) {
 }
 
 int main() {
-    srand(time(NULL));
-    int arr[1000];
-    for (int i = 0; i < 1000; i++) {
-        arr[i] = rand() % 1000;
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
     }
-    quickSort(arr, 0, 999);
+    int arr[1000];
+    int n = 0;
+
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
+
+    quickSort(arr, 0, n - 1);
+    
+    fclose(file);
+
     return 0;
 }

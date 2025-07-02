@@ -44,12 +44,20 @@ void generateRandomArray(int arr[], int n) {
 }
 
 int main() {
-    const int n = 1000;
-    int arr[n];
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
+    int arr[1000];
+    int n = 0;
 
-    generateRandomArray(arr, n);
+    while (fscanf(file, "%d", &arr[n]) == 1 && n < 1000) {
+        n++;
+    }
 
     quickSort(arr, 0, n - 1);
+
+    fclose(file);
 
     return 0;
 }

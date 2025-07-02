@@ -48,17 +48,20 @@ void test_heap_sort(int* arr, int n) {
 }
 
 int main() {
-    int n = 1000;
-    int* arr = (int*)malloc(n * sizeof(int));
+    int arr[1000];
+    int size = 0;
 
-    // Generate random inputs
-    for (int i = 0; i < n; i++)
-        arr[i] = rand() % 1000;
+    FILE *file = fopen("../../inputs.txt", "r");
+    if (!file) {
+        return 1;
+    }
 
-    test_heap_sort(arr, n);
+    while (fscanf(file, "%d", &arr[size]) == 1 && size < 1000) {
+        size++;
+    }
+    fclose(file);
 
-    // Free allocated memory
-    free(arr);
+    heap_sort(arr, size);
 
     return 0;
 }

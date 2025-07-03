@@ -5,7 +5,6 @@
 void shuffle(int *array, int n) {
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
-        // Troca array[i] e array[j]
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
@@ -13,7 +12,7 @@ void shuffle(int *array, int n) {
 }
 
 int main() {
-    int n = 1000;
+    int n = 10;
     int *arr = malloc(n * sizeof(int));
     if (!arr) {
         perror("Malloc failed");
@@ -29,7 +28,7 @@ int main() {
 
     shuffle(arr, n);
 
-    FILE *file = fopen("inputs.txt", "w");
+    FILE *file = fopen("inputs_bogosort.txt", "w");
     if (!file) {
         perror("Failed to open file");
         free(arr);

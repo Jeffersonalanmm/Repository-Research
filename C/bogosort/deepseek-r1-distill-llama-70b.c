@@ -40,7 +40,7 @@ void bogoSort(int* array, int size) {
 
 // Example usage in main function
 int main() {
-    FILE* f = fopen("../../inputs.txt", "r");
+    FILE* f = fopen("../../inputs_bogosort.txt", "r");
 
     int capacity = 1000;
     int* array = (int*)malloc(capacity * sizeof(int));

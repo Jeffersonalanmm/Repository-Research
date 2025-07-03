@@ -31,14 +31,14 @@ void sort(int *a, int n)
 
 int main()
 {
-    int numbers[1000];
-    FILE *file = fopen("../../inputs.txt", "r");
+    int numbers[10];
+    FILE *file = fopen("../../inputs_bogosort.txt", "r");
     if (!file)
     {
                 return 1;
     }
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 10; i++)
     {
         if (fscanf(file, "%d", &numbers[i]) != 1)
         {
@@ -48,6 +48,6 @@ int main()
     }
     fclose(file);
 
-    sort(numbers, 1000);
+    sort(numbers, 10);
     return 0;
 }

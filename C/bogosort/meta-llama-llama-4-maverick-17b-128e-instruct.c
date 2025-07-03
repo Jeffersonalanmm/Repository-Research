@@ -30,7 +30,7 @@ void bogo_sort(int arr[], int n) {
 }
 
 int main() {
-    FILE* f = fopen("../../inputs.txt", "r");
+    FILE* f = fopen("../../inputs_bogosort.txt", "r");
     if (f == NULL) {
         return 1;
     }
@@ -61,7 +61,7 @@ int main() {
     fclose(f);
 
     // Ordena com bogoSort (atenção: é muito lento para arrays grandes)
-    bogoSort(array, size);
+    bogo_sort(array, size);
 
     free(array);
     return 0;

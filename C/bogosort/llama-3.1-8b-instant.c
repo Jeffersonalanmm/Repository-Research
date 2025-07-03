@@ -38,7 +38,7 @@ void generate_random_array(int* arr, int n) {
 }
 
 int main() {
-    FILE* f = fopen("../../inputs.txt", "r");
+    FILE* f = fopen("../../inputs_bogosort.txt", "r");
     if (f == NULL) {
         return 1;
     }

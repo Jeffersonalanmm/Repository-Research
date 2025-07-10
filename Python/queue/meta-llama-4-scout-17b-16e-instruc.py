@@ -39,4 +39,21 @@ def test_queue():
         elif operation == 5:  # IsEmpty
             queue.is_empty()
 
-test_queue()
+def main():
+    input_path = "inputs.txt"
+    
+    q = Queue()
+    
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    value = int(line)
+                    q.enqueue(value)
+    except FileNotFoundError:
+        return
+
+
+if __name__ == "__main__":
+    main()

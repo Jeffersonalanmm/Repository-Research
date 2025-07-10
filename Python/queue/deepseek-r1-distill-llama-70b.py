@@ -24,15 +24,20 @@ class Queue:
     def size(self):
         return len(self.deque)
 
-# Example usage
-if __name__ == "__main__":
-    q = Queue()
-    q.enqueue(1)
-    q.enqueue(2)
-    q.enqueue(3)
+def main():
+    input_path = "inputs.txt"
     
-    print(q.size())  # Output: 3
-    print(q.peek())  # Output: 1
-    print(q.dequeue())  # Output: 1
-    print(q.size())  # Output: 2
-    print(q.is_empty())  # Output: False
+    q = Queue()
+    
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    value = int(line)
+                    q.enqueue(value)
+    except FileNotFoundError:
+        return
+
+if __name__ == "__main__":
+    main()

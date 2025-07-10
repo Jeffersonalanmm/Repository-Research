@@ -112,16 +112,23 @@ class AVL_Tree:
             return root
         return self.getMinValueNode(root.left)
 
-# Generate 1000 random inputs
-inputs = [random.randint(1, 1000) for _ in range(1000)]
+import sys
 
-# Create an AVL tree and insert the inputs
-tree = AVL_Tree()
-root = None
-for key in inputs:
-    root = tree.insert(root, key)
+def main():
+    avl = AVL_Tree()
+    root = None
 
-# Delete some nodes from the tree
-for _ in range(100):
-    key = random.choice(inputs)
-    root = tree.delete(root, key)
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.isdigit():
+                    key = int(line)
+                    root = avl.insert(root, key)
+    except FileNotFoundError:
+        return
+
+if __name__ == "__main__":
+    main()

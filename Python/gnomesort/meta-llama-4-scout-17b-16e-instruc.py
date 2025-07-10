@@ -20,17 +20,19 @@ def gnome_sort(arr):
                 i -= 1
     return arr
 
-# Generate 1000 random inputs
-random_inputs = [[random.randint(0, 1000) for _ in range(random.randint(1, 100))] for _ in range(1000)]
+import sys
 
-# Run gnome sort on each input
-sorted_inputs = [gnome_sort(arr) for arr in random_inputs]
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Validate the sorted inputs (no prints, just return)
-def validate_sorted(arr):
-    for i in range(1, len(arr)):
-        if arr[i-1] > arr[i]:
-            return False
-    return True
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-validated = [validate_sorted(arr) for arr in sorted_inputs]
+    sorted_arr = gnome_sort(arr)
+
+
+if __name__ == "__main__":
+    main()

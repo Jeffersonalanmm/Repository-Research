@@ -22,7 +22,7 @@ class Graph:
         # Check for negative-weight cycles
         for u, v, w in self.graph:
             if dist[u] != float('Inf') and dist[u] + w < dist[v]:
-                return None  # Negative cycle found
+                pass #return None  # Negative cycle found
 
         return dist
 
@@ -37,12 +37,33 @@ def generate_random_graph(vertices, edges):
     return graph
 
 
+import sys
+
 def main():
-    vertices = 1000
-    edges = 2000
-    graph = generate_random_graph(vertices, edges)
-    src_vertex = random.randint(0, vertices - 1)
-    distances = graph.bellman_ford(src_vertex)
+    input_path = "graph_input.txt"
+
+    graph = None
+    max_vertex = -1
+    try:
+        with open(input_path, 'r') as f:
+            edges = []
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) != 3:
+                    continue
+                u, v, w = map(int, parts)
+                edges.append((u, v, w))
+                max_vertex = max(max_vertex, u, v)
+    except FileNotFoundError:
+        return
+
+    graph = Graph(max_vertex + 1)
+    for u, v, w in edges:
+        graph.add_edge(u, v, w)
+
+    source_vertex = 0
+
+    graph.bellman_ford(source_vertex)
 
 
 if __name__ == "__main__":

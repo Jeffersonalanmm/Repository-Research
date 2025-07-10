@@ -27,26 +27,23 @@ class Queue:
         else:
             raise IndexError("Front from an empty queue")
 
-# Generate 1000 random strings of length 10
-random_strings = [''.join(random.choices(string.ascii_letters + string.digits, k=10)) for _ in range(1000)]
+def main():
+    input_path = "inputs.txt"
+    
+    q = Queue()
+    
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    value = int(line)
+                    q.enqueue(value)
+    except FileNotFoundError:
+        return
 
-# Create a queue and perform operations
-queue = Queue()
+    while not q.is_empty():
+        print(q.dequeue())
 
-# Enqueue 1000 random strings
-for s in random_strings:
-    queue.enqueue(s)
-
-# Dequeue 500 items
-for _ in range(500):
-    queue.dequeue()
-
-# Enqueue 500 new random strings
-for s in random_strings[:500]:
-    queue.enqueue(s)
-
-# Check the size of the queue
-queue_size = queue.size()
-
-# Get the front item
-front_item = queue.front()
+if __name__ == "__main__":
+    main()

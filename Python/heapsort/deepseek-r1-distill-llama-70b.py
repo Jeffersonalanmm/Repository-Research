@@ -60,22 +60,18 @@ def heap_sort(arr):
     
     return sorted_arr
 
+import sys
+
 def main():
-    # Test with random input
-    random_input = [random.randint(0, 1000) for _ in range(1000)]
-    sorted_output = heap_sort(random_input)
-    
-    # Test with ascending order
-    ascending = list(range(10))
-    sorted_ascending = heap_sort(ascending)
-    
-    # Test with descending order
-    descending = list(range(9, -1, -1))
-    sorted_descending = heap_sort(descending)
-    
-    # Test with duplicate values
-    duplicates = [5, 2, 8, 2, 5, 1]
-    sorted_duplicates = heap_sort(duplicates)
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = heap_sort(arr)
 
 if __name__ == "__main__":
     main()

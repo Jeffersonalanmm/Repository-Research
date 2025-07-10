@@ -33,6 +33,28 @@ graph = {
     'D': {'B': 5, 'C': 1},
 }
 
-start_vertex = 'A'
-distances = dijkstra(graph, start_vertex)
-print(distances)
+def main():
+    import sys
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            edges = [line.strip().split() for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    graph = {}
+    for u, v, w in edges:
+        u, v, w = int(u), int(v), int(w)
+        if u not in graph:
+            graph[u] = {}
+        if v not in graph:
+            graph[v] = {}
+        graph[u][v] = w
+        graph[v][u] = w  
+
+    start_node = int(edges[0][0])
+    distances = dijkstra(graph, start_node)
+
+if __name__ == "__main__":
+    main()

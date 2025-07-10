@@ -11,7 +11,6 @@ def quick_sort(arr):
     """
     _quick_sort_helper(arr, 0, len(arr) - 1)
 
-
 def _quick_sort_helper(arr, low, high):
     """
     Recursive helper function for the quick sort algorithm.
@@ -53,13 +52,19 @@ def _partition(arr, low, high):
 
 
 # Example usage:
-import random
+import sys
 
-# Generate a random array of 1000 elements
-arr = [random.randint(0, 1000) for _ in range(1000)]
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Sort the array using quick sort
-quick_sort(arr)
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-# Verify that the array is sorted
-assert all(arr[i] <= arr[i + 1] for i in range(len(arr) - 1))
+    sorted_arr = quick_sort(arr)
+    
+
+if __name__ == "__main__":
+    main()

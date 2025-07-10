@@ -42,18 +42,18 @@ def cycle_sort(arr):
     return arr
 
 
-# Generate 1000 random inputs
-random_inputs = [random.sample(range(1, 1000), 10) for _ in range(1000)]
+import sys
 
-# Run cycle sort on each input
-for inp in random_inputs:
-    cycle_sort(inp)
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Measure execution time
-start_time = time.time()
-for inp in random_inputs:
-    cycle_sort(inp)
-end_time = time.time()
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-# Calculate average execution time
-avg_time = (end_time - start_time) / len(random_inputs)
+    cycle_sort(arr)
+if __name__ == "__main__":
+    main()
+

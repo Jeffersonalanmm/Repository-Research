@@ -39,6 +39,32 @@ def patience_sort(nums):
     
     return sorted_nums[::-1]
 
-# Generate 1000 random numbers and sort them using patience sort
-random_nums = [random.randint(0, 10000) for _ in range(1000)]
-sorted_nums = patience_sort(random_nums)
+import random
+import bisect
+
+def patience_sort(arr):
+    piles = []
+    for x in arr:
+        i = bisect.bisect_left(piles, x)
+        if i != len(piles):
+            piles[i] = x
+        else:
+            piles.append(x)
+    return piles
+
+import sys
+
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = patience_sort(arr)
+    
+
+if __name__ == "__main__":
+    main()

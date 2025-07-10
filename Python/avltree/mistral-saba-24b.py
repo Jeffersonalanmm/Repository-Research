@@ -72,14 +72,20 @@ class AVLTree:
     def insert_node(self, key):
         self.root = self.insert(self.root, key)
 
-# Generate 1000 random inputs
-import random
-random_inputs = [random.randint(1, 10000) for _ in range(1000)]
+import sys
+def main():
+    avl = AVLTree()
 
-# Create AVL Tree and insert random inputs
-avl_tree = AVLTree()
-for key in random_inputs:
-    avl_tree.insert_node(key)
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Get pre-order traversal of the AVL tree
-pre_order_traversal = avl_tree.pre_order(avl_tree.root)
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.isdigit():
+                    avl.insert_node(int(line))
+    except FileNotFoundError:
+        return
+
+if __name__ == "__main__":
+    main()

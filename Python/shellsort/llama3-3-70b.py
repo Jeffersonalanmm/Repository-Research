@@ -39,18 +39,20 @@ def shell_sort(arr):
 
 
 # Generate 1000 random inputs
-random_inputs = [random.randint(1, 1000) for _ in range(1000)]
+import sys
 
-# Measure the execution time
-start_time = time.time()
-sorted_arr = shell_sort(random_inputs)
-end_time = time.time()
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Calculate the execution time
-execution_time = end_time - start_time
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-# Store the results
-results = {
-    "sorted_array": sorted_arr,
-    "execution_time": execution_time
-}
+    sorted_arr = shell_sort(arr)
+
+
+if __name__ == "__main__":
+    main()
+

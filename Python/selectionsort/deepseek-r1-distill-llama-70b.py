@@ -35,13 +35,19 @@ def optimized_selection_sort(arr):
     
     return arr
 
-# Example usage
-if __name__ == "__main__":
-    import random
-    random.seed(42)
-    arr = [random.randint(0, 1000) for _ in range(1000)]
+import sys
+
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
     sorted_arr = optimized_selection_sort(arr)
-    # Verify the sort (no print statements)
-    for i in range(1, len(sorted_arr)):
-        if sorted_arr[i] < sorted_arr[i-1]:
-            pass
+
+
+if __name__ == "__main__":
+    main()

@@ -37,5 +37,22 @@ def test_queue():
     assert queue.is_empty() == True
     assert queue.size() == 0
     assert queue.peek() == None
+def main():
+    input_path = "inputs.txt"
+    
+    q = Queue()
+    
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    value = int(line)
+                    q.enqueue(value)
+    except FileNotFoundError:
+        return
 
-test_queue()
+
+
+if __name__ == "__main__":
+    main()

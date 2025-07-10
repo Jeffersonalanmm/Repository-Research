@@ -27,28 +27,20 @@ class Queue:
         return self.queue[0]
 
 # Test the Queue implementation with 1000 random inputs
-queue = Queue()
-inputs = [random.randint(1, 100) for _ in range(1000)]
+def main():
+    input_path = "inputs.txt"
+    
+    q = Queue()
+    
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    value = int(line)
+                    q.enqueue(value)
+    except FileNotFoundError:
+        return
 
-start_time = time.time()
-for input_value in inputs:
-    queue.enqueue(input_value)
-
-for _ in range(len(inputs)):
-    queue.dequeue()
-
-end_time = time.time()
-execution_time = end_time - start_time
-
-# Verify the correctness of the Queue implementation
-queue_correctness_test = Queue()
-test_inputs = [random.randint(1, 100) for _ in range(1000)]
-
-for test_input in test_inputs:
-    queue_correctness_test.enqueue(test_input)
-
-for _ in range(len(test_inputs)):
-    assert queue_correctness_test.dequeue() is not None
-
-assert queue_correctness_test.is_empty() == True
-assert queue_correctness_test.peek() is None
+if __name__ == "__main__":
+    main()

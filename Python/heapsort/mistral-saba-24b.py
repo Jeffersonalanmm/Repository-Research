@@ -25,9 +25,19 @@ def heap_sort(arr):
     for i in range(n - 1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]
         heapify(arr, i, 0)
+   
+import sys
 
-# Generate 1000 random inputs
-random_inputs = [random.randint(0, 10000) for _ in range(1000)]
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Sort the random inputs using heap sort
-heap_sort(random_inputs)
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = heap_sort(arr)
+
+if __name__ == "__main__":
+    main()

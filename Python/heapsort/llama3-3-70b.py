@@ -47,14 +47,20 @@ def heap_sort(arr):
     return arr
 
 
-# Generate 1000 random inputs
-inputs = [random.sample(range(1, 1000), random.randint(1, 100)) for _ in range(1000)]
+import sys
 
-# Measure the execution time
-start_time = time.time()
-for arr in inputs:
-    heap_sort(arr)
-end_time = time.time()
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Calculate the average execution time
-average_time = (end_time - start_time) / len(inputs)
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = heap_sort(arr)
+    
+    print(sorted_arr)
+
+if __name__ == "__main__":
+    main()

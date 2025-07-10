@@ -35,8 +35,19 @@ def bubble_sort(arr):
     
     return arr
 
-# Generate 1000 random inputs
-random_inputs = [random.sample(range(1, 1000), random.randint(1, 100)) for _ in range(1000)]
+import sys      
 
-# Test the bubble_sort function with the random inputs
-sorted_inputs = [bubble_sort(input_list) for input_list in random_inputs]
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = bubble_sort(arr)
+    print(sorted_arr)
+
+if __name__ == "__main__":
+    main()

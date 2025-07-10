@@ -92,3 +92,23 @@ class AVLTree:
             print(node.key, end=" ")
             self._inorder(node.right)
 
+# Example usage with 1000 random inputs
+import sys
+
+def main():
+    tree = AVLTree()
+
+    # Caminho do arquivo (pode ser passado via linha de comando ou hardcoded)
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.isdigit():  # apenas inteiros válidos
+                    key = int(line)
+                    tree.insert(key)
+    except FileNotFoundError:
+        return
+if __name__ == "__main__":
+    main()

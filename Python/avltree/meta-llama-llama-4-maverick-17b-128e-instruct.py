@@ -76,13 +76,23 @@ class AVLTree:
     def _inorder(self, node):
         if node:
             self._inorder(node.left)
-            # print(node.key, end=" ")
+            #print(node.key, end=" ")
             self._inorder(node.right)
 
-def test_avl_tree():
-    avl_tree = AVLTree()
-    keys = [random.randint(1, 1000) for _ in range(1000)]
-    for key in keys:
-        avl_tree.insert(key)
+import sys 
+def main():
+    avl = AVLTree()
 
-test_avl_tree()
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.isdigit():
+                    avl.insert(int(line))
+    except FileNotFoundError:
+        return
+
+if __name__ == "__main__":
+    main()

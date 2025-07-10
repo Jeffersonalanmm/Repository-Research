@@ -22,11 +22,18 @@ def _partition(arr, low, high):
             arr[i], arr[j] = arr[j], arr[i]
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
     return i + 1
+import sys
 
-def generate_random_list(size):
-    """Generates a list of random integers."""
-    return [random.randint(0, 1000) for _ in range(size)]
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Test the implementation with 1000 random inputs
-arr = generate_random_list(1000)
-sorted_arr = quick_sort(arr)
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = quick_sort(arr)
+
+if __name__ == "__main__":
+    main()

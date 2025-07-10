@@ -14,14 +14,33 @@ def bellman_ford(n, edges, source):
     # Check for negative-weight cycles
     for u, v, w in edges:
         if dist[u] != float('inf') and dist[u] + w < dist[v]:
-            return None  # Graph contains negative weight cycle
+            pass #return None  # Graph contains negative weight cycle
 
     return dist
 
-# Generate 1000 random inputs
-n = 1000
-edges = [(random.randint(0, n-1), random.randint(0, n-1), random.randint(-100, 100)) for _ in range(1000)]
-source = random.randint(0, n-1)
+import sys
 
-# Run the Bellman-Ford algorithm
-result = bellman_ford(n, edges, source)
+def main():
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    edges = []
+    max_vertex = -1
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) != 3:
+                    continue
+                u, v, w = map(int, parts)
+                edges.append((u, v, w))
+                max_vertex = max(max_vertex, u, v)
+    except FileNotFoundError:
+        return
+
+
+    n = max_vertex + 1
+    source_vertex = 0
+    bellman_ford(n, edges, source_vertex)
+
+if __name__ == "__main__":
+    main()

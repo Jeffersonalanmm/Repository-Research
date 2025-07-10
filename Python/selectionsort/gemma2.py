@@ -11,8 +11,20 @@ def selection_sort(arr):
     arr[i], arr[min_idx] = arr[min_idx], arr[i]
   return arr
 
-# Generate 1000 random integers
-random_array = [random.randint(1, 1000) for _ in range(1000)]
+import sys
 
-# Apply selection sort
-selection_sort(random_array) 
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = selection_sort(arr)
+
+
+if __name__ == "__main__":
+    main()
+

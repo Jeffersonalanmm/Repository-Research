@@ -2,44 +2,24 @@
 #include <stdlib.h>
 #include <time.h>
 
-void shuffle(int *array, int n) {
-    for (int i = n - 1; i > 0; i--) {
-        int j = rand() % (i + 1);
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-}
-
 int main() {
-    int n = 10;
-    int *arr = malloc(n * sizeof(int));
-    if (!arr) {
-        perror("Malloc failed");
-        return 1;
-    }
 
-    // Preenche com 1..n
-    for (int i = 0; i < n; i++) {
-        arr[i] = i + 1;
-    }
+    int size = 1000;
 
-    srand(time(NULL)); // Semente baseada no tempo
-
-    shuffle(arr, n);
-
-    FILE *file = fopen("inputs_bogosort.txt", "w");
+    FILE *file = fopen("inputs.txt", "w");
     if (!file) {
-        perror("Failed to open file");
-        free(arr);
+        perror("Error to open file");        
         return 1;
     }
+    
+    srand(42); // Semente fixa para garantir sempre a mesma sequência
 
-    for (int i = 0; i < n; i++) {
-        fprintf(file, "%d\n", arr[i]);
+    for (int i = 0; i < size; i++) {
+        int num = rand() % 10000000;
+        fprintf(file, "%d\n", num);   
     }
 
     fclose(file);
-    free(arr);
+
     return 0;
 }

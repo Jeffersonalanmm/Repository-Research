@@ -16,20 +16,36 @@ def bellman_ford(V, edges, src):
     has_neg_cycle = False
     for u, v, w in edges:
         if dist[u] != INF and dist[u] + w < dist[v]:
-            has_neg_cycle = True
-            break
+            pass
     return dist, has_neg_cycle
 
-if __name__ == "__main__":
-    # Generate test case with 1000 edges
-    V = 100  # number of vertices
-    E = 1000
+import sys
+
+def main():
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
+
     edges = []
-    for _ in range(E):
-        u = random.randint(0, V-1)
-        v = random.randint(0, V-1)
-        w = random.randint(-100, 100)
-        edges.append( (u, v, w) )
-    src = random.randint(0, V-1)
-    dist, has_neg = bellman_ford(V, edges, src)
+    max_vertex = -1
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                parts = line.strip().split()
+                if len(parts) != 3:
+                    continue
+                u, v, w = map(int, parts)
+                edges.append((u, v, w))
+                max_vertex = max(max_vertex, u, v)
+    except FileNotFoundError:
+        return
+
+    if max_vertex == -1:
+        return
+
+    V = max_vertex + 1
+    source_vertex = 0
+
+    bellman_ford(V, edges, source_vertex)
+
+if __name__ == "__main__":
+    main()
 

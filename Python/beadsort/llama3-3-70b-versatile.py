@@ -24,11 +24,21 @@ def bead_sort(nums):
 
     return sorted_nums
 
-# Generate 1000 random inputs
-random_inputs = [random.randint(1, 100) for _ in range(1000)]
 
-# Test the function
-sorted_inputs = bead_sort(random_inputs)
+import sys
 
-# Store the result
-result = sorted_inputs
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            nums = []
+            for line in f:
+                line = line.strip()
+                if line.isdigit():
+                    nums.append(int(line))
+    except FileNotFoundError:
+        return
+
+if __name__ == "__main__":
+    main()

@@ -26,21 +26,20 @@ def binary_search(arr, target):
     
     return -1
 
-# Generate 1000 random inputs
-random_inputs = [random.randint(1, 1000) for _ in range(1000)]
-random_inputs.sort()
+import sys
 
-# Measure the execution time of the binary search algorithm
-start_time = time.time()
-for target in random_inputs:
-    binary_search(random_inputs, target)
-end_time = time.time()
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Calculate the execution time
-execution_time = end_time - start_time
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-# Store the results
-results = [binary_search(random_inputs, target) for target in random_inputs]
+    arr.sort()  # binary_search requires sorted array
 
-# Calculate the number of successful searches
-successful_searches = sum(1 for result in results if result != -1)
+    target = 15
+    binary_search(arr, target)
+if __name__ == "__main__":
+    main()

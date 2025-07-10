@@ -45,8 +45,20 @@ def generate_random_list(size):
     return [random.randint(0, 1000) for _ in range(size)]
 
 
+import sys      
+
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = bubble_sort(arr)
+
+    print(sorted_arr)
+
 if __name__ == "__main__":
-    # Generate a list of 1000 random integers
-    random_list = generate_random_list(1000)
-    # Sort the list using Bubble sort
-    sorted_list = bubble_sort(random_list)
+    main()

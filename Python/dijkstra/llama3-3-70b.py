@@ -45,34 +45,30 @@ def dijkstra(graph, start):
     return distances, previous
 
 
-# Generate a random graph with 1000 nodes and 5000 edges
-graph = {}
-for i in range(1000):
-    graph[i] = {}
-for _ in range(5000):
-    node1 = random.randint(0, 999)
-    node2 = random.randint(0, 999)
-    weight = random.randint(1, 10)
-    graph[node1][node2] = weight
-    graph[node2][node1] = weight  # For undirected graph
+def main():
+    import sys
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Run Dijkstra's algorithm
-start_node = 0
-distances, previous = dijkstra(graph, start_node)
+    try:
+        with open(input_path, 'r') as f:
+            edges = [line.strip().split() for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-# Example usage: find the shortest path from the start node to all other nodes
-shortest_paths = {}
-for node in graph:
-    path = []
-    current_node = node
-    while current_node is not None:
-        path.append(current_node)
-        current_node = previous[current_node]
-    shortest_paths[node] = path[::-1]
+    edges = [(int(u), int(v), int(w)) for u, v, w in edges]
 
-# Store the results
-results = {
-    'distances': distances,
-    'previous': previous,
-    'shortest_paths': shortest_paths
-}
+    graph = {}
+    for u, v, w in edges:
+        if u not in graph:
+            graph[u] = {}
+        if v not in graph:
+            graph[v] = {}
+        graph[u][v] = w
+        graph[v][u] = w  
+
+    start_node = edges[0][0]
+    distances, previous = dijkstra(graph, start_node)
+
+
+if __name__ == "__main__":
+    main()

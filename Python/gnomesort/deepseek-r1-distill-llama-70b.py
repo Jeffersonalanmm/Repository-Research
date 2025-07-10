@@ -14,13 +14,18 @@ def gnome_sort(arr):
     return arr
 
 # Example usage with 1000 random inputs (example with 5 elements for demonstration)
-import random
+import sys
 
 def main():
-    arr = [random.randint(0, 1000) for _ in range(5)]  # Change 5 to 1000 for more elements
-    print("Unsorted array:", arr)
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
     sorted_arr = gnome_sort(arr)
-    print("Sorted array:", sorted_arr)
 
 if __name__ == "__main__":
     main()

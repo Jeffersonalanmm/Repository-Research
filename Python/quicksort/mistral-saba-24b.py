@@ -10,8 +10,19 @@ def quick_sort(arr):
         right = [x for x in arr if x > pivot]
         return quick_sort(left) + middle + quick_sort(right)
 
-# Generate 1000 random inputs
-random_inputs = [random.randint(1, 10000) for _ in range(1000)]
+import sys
 
-# Sort the random inputs using quick sort
-sorted_inputs = quick_sort(random_inputs)
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = quick_sort(arr)
+    
+
+if __name__ == "__main__":
+    main()

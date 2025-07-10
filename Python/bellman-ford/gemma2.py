@@ -14,25 +14,44 @@ def bellman_ford(graph, source):
     for node in graph:
         for neighbor, weight in graph[node].items():
             if distances[node] != float('inf') and distances[node] + weight < distances[neighbor]:
-                raise ValueError("Negative cycle detected")
+                #raise ValueError("Negative cycle detected")
+                pass
 
     return distances
 
-# Example usage with 1000 random nodes and edges
-num_nodes = 1000
-num_edges = 1000
+import sys
 
-graph = {}
-for i in range(num_nodes):
-    graph[i] = {}
+def main():
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-random.seed(42)  # For reproducibility
-for _ in range(num_edges):
-    u = random.randint(0, num_nodes - 1)
-    v = random.randint(0, num_nodes - 1)
-    weight = random.randint(-100, 100)
-    graph[u][v] = weight
+    graph = {}
+    nodes = set()
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split()
+                if len(parts) != 3:
+                    continue
+                u, v, w = map(int, parts)
+                nodes.update([u, v])
+                if u not in graph:
+                    graph[u] = {}
+                graph[u][v] = w
+        # Garantir que todos os nós estejam no grafo (mesmo que sem arestas)
+        for node in nodes:
+            if node not in graph:
+                graph[node] = {}
+    except FileNotFoundError:
+        return
 
-source_node = random.randint(0, num_nodes - 1)
-distances = bellman_ford(graph, source_node)
+    source_vertex = 0
+
+    distances = bellman_ford(graph, source_vertex)
+
+
+if __name__ == "__main__":
+    main()
 

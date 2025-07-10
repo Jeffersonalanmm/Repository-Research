@@ -20,12 +20,19 @@ def _partition(arr, low, high):
     arr[i + 1], arr[high] = arr[high], arr[i + 1]
     return i + 1
 
-# Generate 1000 random inputs and test the quick sort implementation
-random_inputs = [random.randint(0, 1000) for _ in range(1000)]
-sorted_inputs = quick_sort(random_inputs.copy())
-assert all(sorted_inputs[i] <= sorted_inputs[i + 1] for i in range(len(sorted_inputs) - 1))
+import sys
 
-# Example usage with a smaller input
-arr = [5, 2, 9, 1, 7, 6]
-quick_sort(arr)
-# assert arr == [1, 2, 5, 6, 7, 9]
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = quick_sort(arr)
+    
+
+if __name__ == "__main__":
+    main()

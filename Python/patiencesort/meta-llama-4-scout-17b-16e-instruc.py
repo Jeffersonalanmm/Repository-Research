@@ -11,6 +11,19 @@ def patience_sort(arr):
             piles.append(x)
     return piles
 
-# Test with 1000 random inputs
-arr = [random.randint(1, 1000) for _ in range(1000)]
-patience_sort(arr)
+import sys
+
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = patience_sort(arr)
+
+
+if __name__ == "__main__":
+    main()

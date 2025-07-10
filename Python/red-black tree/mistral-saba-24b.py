@@ -213,12 +213,28 @@ class RedBlackTree:
         while node.left != self.NIL_LEAF:
             node = node.left
         return node
+def main():
+    import sys
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Example usage with 1000 random inputs
-import random
+    try:
+        with open(input_path, 'r') as f:
+            keys = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-tree = RedBlackTree()
-random_keys = [random.randint(1, 10000) for _ in range(1000)]
+    rb_tree = RedBlackTree()
 
-for key in random_keys:
-    tree.insert(key)
+    for key in keys:
+        rb_tree.insert(key)
+
+    import random
+
+    num_to_delete = len(keys) // 2
+    keys_to_delete = random.sample(keys, num_to_delete) if num_to_delete > 0 else []
+
+    for key in keys_to_delete:
+        rb_tree.delete(key)
+
+if __name__ == "__main__":
+    main()

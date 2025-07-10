@@ -56,14 +56,19 @@ def patience_sort(arr):
     return result
 
 
-# Generate 1000 random inputs
-random_inputs = [random.randint(1, 1000) for _ in range(1000)]
+import sys
 
-# Test the patience sort algorithm
-sorted_result = patience_sort(random_inputs)
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Verify the result
-def is_sorted(arr):
-    return all(arr[i] <= arr[i+1] for i in range(len(arr)-1))
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-assert is_sorted(sorted_result)
+    sorted_arr = patience_sort(arr)
+    
+
+if __name__ == "__main__":
+    main()

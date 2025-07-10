@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h> //add by author
 // Function to perform cycle sort
 void cycleSort(int arr[], int n) {
     int writes = 0;

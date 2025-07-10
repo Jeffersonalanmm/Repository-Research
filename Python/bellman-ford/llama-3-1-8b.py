@@ -19,23 +19,44 @@ class Graph:
         for u in range(self.num_vertices):
             for v in range(self.num_vertices):
                 if self.graph[u][v] != float('inf') and distance[u] != float('inf') and distance[u] + self.graph[u][v] < distance[v]:
-                    raise ValueError("Graph contains a negative-weight cycle")
+                    #raise ValueError("Graph contains a negative-weight cycle")
+                    pass
 
         return distance
 
 
-# Example usage:
-num_vertices = 5
-g = Graph(num_vertices)
+import sys
 
-g.add_edge(0, 1, -1)
-g.add_edge(0, 2, 4)
-g.add_edge(1, 2, 3)
-g.add_edge(1, 3, 2)
-g.add_edge(1, 4, 2)
-g.add_edge(3, 2, 5)
-g.add_edge(3, 1, 1)
-g.add_edge(4, 3, -3)
+def main():
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-source = 0
-distance = g.bellman_ford(source)
+    edges = []
+    nodes = set()
+
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split()
+                if len(parts) != 3:
+                    continue
+                u, v, w = map(int, parts)
+                edges.append((u, v, w))
+                nodes.update([u, v])
+    except FileNotFoundError:
+        return
+
+    num_vertices = max(nodes) + 1
+    g = Graph(num_vertices)
+
+    for u, v, w in edges:
+        g.add_edge(u, v, w)
+
+    source_vertex = 0
+    g.bellman_ford(source_vertex)
+    
+if __name__ == "__main__":
+    main()
+

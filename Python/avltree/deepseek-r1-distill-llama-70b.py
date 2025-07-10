@@ -116,15 +116,22 @@ class AVLTree:
         return node
 
 # Example usage with 1000 random inputs
-tree = AVLTree()
-random_keys = [random.randint(1, 10000) for _ in range(1000)]
-for key in random_keys:
-    tree.insert(key, f"value_{key}")
+import sys
 
-for key in random.sample(random_keys, 500):
-    tree.delete(key)
+def main():
+    tree = AVLTree()
 
-for key in random.sample(random_keys, 500):
-    node = tree.search(key)
-    if node:
-        pass
+    # Caminho do arquivo (pode ser passado via linha de comando ou hardcoded)
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.isdigit():  # apenas inteiros válidos
+                    key = int(line)
+                    tree.insert(key, f"value_{key}")
+    except FileNotFoundError:
+        return
+if __name__ == "__main__":
+    main()

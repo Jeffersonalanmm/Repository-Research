@@ -31,8 +31,19 @@ def merge_sort(arr):
             j += 1
             k += 1
 
-# Generate 1000 random integers
-random_inputs = [random.randint(0, 10000) for _ in range(1000)]
+import sys
 
-# Sort the random inputs using merge sort
-merge_sort(random_inputs)
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    sorted_arr = merge_sort(arr)
+
+
+if __name__ == "__main__":
+    main()

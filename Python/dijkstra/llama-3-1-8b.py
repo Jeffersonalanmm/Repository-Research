@@ -30,26 +30,28 @@ class Graph:
         return distances
 
 
-# Example usage:
-num_vertices = 9
-graph = Graph(num_vertices)
+def main():
+    import sys
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-graph.add_edge(0, 1, 4)
-graph.add_edge(0, 7, 8)
-graph.add_edge(1, 2, 8)
-graph.add_edge(1, 7, 11)
-graph.add_edge(2, 3, 7)
-graph.add_edge(2, 5, 4)
-graph.add_edge(2, 8, 2)
-graph.add_edge(3, 4, 9)
-graph.add_edge(3, 5, 14)
-graph.add_edge(4, 5, 10)
-graph.add_edge(5, 6, 2)
-graph.add_edge(6, 7, 1)
-graph.add_edge(6, 8, 6)
-graph.add_edge(7, 8, 7)
+    try:
+        with open(input_path, 'r') as f:
+            edges = [line.strip().split() for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+    edges = [(int(u), int(v), int(w)) for u, v, w in edges]
 
-start_vertex = 0
-distances = graph.dijkstra(start_vertex)
+    all_nodes = {u for u, v, _ in edges} | {v for u, v, _ in edges}
+    num_vertices = max(all_nodes) + 1
 
-# The distances list now contains the shortest distances from the start vertex to all other vertices
+    g = Graph(num_vertices)
+
+    for u, v, w in edges:
+        g.add_edge(u, v, w)
+        g.add_edge(v, u, w)  
+
+    start_node = edges[0][0]
+    distances = g.dijkstra(start_node)
+
+if __name__ == "__main__":
+    main()

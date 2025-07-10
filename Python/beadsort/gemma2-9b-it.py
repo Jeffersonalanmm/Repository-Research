@@ -18,8 +18,24 @@ def beadsort(arr):
 
   return arr
 
-# Generate 1000 random inputs
-random_inputs = [random.randint(0, 1000) for _ in range(1000)]
+import sys
 
-# Apply beadsort to the random inputs
-sorted_inputs = beadsort(random_inputs.copy()) 
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = []
+            for line in f:
+                line = line.strip()
+                if line.isdigit():
+                    val = int(line)
+                    if val >= 0:
+                        arr.append(val)
+    except FileNotFoundError:
+        return
+
+    beadsort(arr)
+if __name__ == "__main__":
+    main()
+

@@ -239,29 +239,28 @@ class RedBlackTree:
     def in_order_traversal(self):
         self.in_order(self.root)
 
-# Test the implementation
-rb_tree = RedBlackTree()
-rb_tree.insert(10, 'A')
-rb_tree.insert(20, 'B')
-rb_tree.insert(5, 'C')
-rb_tree.insert(15, 'D')
-rb_tree.insert(25, 'E')
-rb_tree.insert(3, 'F')
-rb_tree.insert(7, 'G')
-rb_tree.insert(12, 'H')
-rb_tree.insert(18, 'I')
-rb_tree.insert(22, 'J')
-rb_tree.insert(30, 'K')
+def main():
+    import sys
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-print("Pre-order traversal:")
-rb_tree.pre_order_traversal()
+    try:
+        with open(input_path, 'r') as f:
+            keys = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
 
-print("\nPost-order traversal:")
-rb_tree.post_order_traversal()
+    rb_tree = RedBlackTree()
 
-print("\nIn-order traversal:")
-rb_tree.in_order_traversal()
+    for key in keys:
+        rb_tree.insert(key, f"value_{key}")
 
-rb_tree.delete(20)
-print("\nAfter deleting 20:")
-rb_tree.in_order_traversal()
+    import random
+
+    num_to_delete = len(keys) // 2
+    keys_to_delete = random.sample(keys, num_to_delete) if num_to_delete > 0 else []
+
+    for key in keys_to_delete:
+        rb_tree.delete(key)
+
+if __name__ == "__main__":
+    main()

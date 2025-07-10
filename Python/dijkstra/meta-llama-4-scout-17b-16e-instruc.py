@@ -21,16 +21,29 @@ def dijkstra(graph, start):
 
     return distances
 
-# Generate a random graph with 1000 nodes
-graph = {}
-for _ in range(1000):
-    node = f"node_{_}"
-    graph[node] = {}
-    for _ in range(random.randint(1, 10)):
-        neighbor = f"node_{random.randint(0, 999)}"
-        weight = random.randint(1, 100)
-        graph[node][neighbor] = weight
+def main():
+    import sys
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Run Dijkstra's algorithm
-start_node = "node_0"
-distances = dijkstra(graph, start_node)
+    try:
+        with open(input_path, 'r') as f:
+            edges = [line.strip().split() for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    graph = {}
+    for u, v, w in edges:
+        u, v, w = int(u), int(v), int(w)
+        if u not in graph:
+            graph[u] = {}
+        if v not in graph:
+            graph[v] = {}
+        graph[u][v] = w
+        graph[v][u] = w  
+
+    start_node = int(edges[0][0])
+    distances = dijkstra(graph, start_node)
+
+
+if __name__ == "__main__":
+    main()

@@ -7,8 +7,20 @@ def bubble_sort(arr):
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
 
-# Generate 1000 random integers
-random_inputs = [random.randint(0, 10000) for _ in range(1000)]
+import sys      
 
-# Sort the list using bubble sort
-bubble_sort(random_inputs)
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
+
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    bubble_sort(arr) 
+
+    print(arr)
+
+if __name__ == "__main__":
+    main()

@@ -20,11 +20,28 @@ class BeadSort:
         return sorted_beads
 
 
-# Test the implementation with 1000 random inputs
-import random
+import sys
 
-beads = [random.randint(0, 1000) for _ in range(1000)]
-bead_sort = BeadSort(beads)
-bead_sort.sort()
-sorted_beads = bead_sort.get_sorted_beads()
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
+    try:
+        with open(input_path, 'r') as f:
+            beads = []
+            for line in f:
+                line = line.strip()
+                if line.isdigit():
+                    beads.append(int(line))
+    except FileNotFoundError:
+        return
+
+    if not beads:
+        return
+
+    bead_sort = BeadSort(beads)
+    bead_sort.sort()
+    bead_sort.get_sorted_beads()
+
+
+if __name__ == "__main__":
+    main()

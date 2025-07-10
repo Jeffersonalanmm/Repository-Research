@@ -21,18 +21,31 @@ def bellman_ford(graph, source, num_vertices):
             break
 
     return distance
+import sys
 
-# Example usage with 1000 random inputs
-if __name__ == "__main__":
-    # Generate a random graph with 10 vertices and 20 edges
-    num_vertices = 10
-    num_edges = 20
+def main():
+    input_path = "graph_input.txt" if len(sys.argv) < 2 else sys.argv[1]
+
     graph = []
-    for _ in range(num_edges):
-        u = random.randint(0, num_vertices - 1)
-        v = random.randint(0, num_vertices - 1)
-        w = random.randint(-5, 10)  # Random weights including negative values
-        graph.append((u, v, w))
-    
+    max_vertex = -1
+    try:
+        with open(input_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                parts = line.split()
+                if len(parts) != 3:
+                    continue
+                u, v, w = parts
+                u, v, w = int(u), int(v), int(w)
+                graph.append((u, v, w))
+                max_vertex = max(max_vertex, u, v)
+    except FileNotFoundError:
+        return
+
     source_vertex = 0
-    distances = bellman_ford(graph, source_vertex, num_vertices)
+    bellman_ford(graph, source_vertex, max_vertex + 1)
+
+if __name__ == "__main__":
+    main()

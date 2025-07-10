@@ -39,8 +39,18 @@ def cycle_sort(arr):
 
     return arr, writes
 
-# Generate 1000 random integers
-random_inputs = [random.randint(0, 10000) for _ in range(1000)]
+import sys
+def main():
+    input_path = "inputs.txt" if len(sys.argv) < 2 else sys.argv[1]
 
-# Perform cycle sort on the random inputs
-sorted_array, write_count = cycle_sort(random_inputs)
+    try:
+        with open(input_path, 'r') as f:
+            arr = [int(line.strip()) for line in f if line.strip()]
+    except FileNotFoundError:
+        return
+
+    cycle_sort(arr)
+
+
+if __name__ == "__main__":
+    main()

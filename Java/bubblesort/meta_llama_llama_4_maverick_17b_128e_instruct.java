@@ -1,13 +1,30 @@
-package Java.bubblesort;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 public class meta_llama_llama_4_maverick_17b_128e_instruct {
-        public static void main(String[] args) {
-        int[] arr = new int[1000];
-        Random rand = new Random();
-        for (int i = 0; i < 1000; i++) {
-            arr[i] = rand.nextInt(1000);
+    public static void main(String[] args) {
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
+
+        // Convert List<Integer> to int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
         bubbleSort(arr);
+
+        // Convert sorted int[] back to List<Integer> if needed
+        List<Integer> sorted = new ArrayList<>();
+        for (int num : arr) {
+            sorted.add(num);
+        }
+
     }
 
     public static void bubbleSort(int[] arr) {

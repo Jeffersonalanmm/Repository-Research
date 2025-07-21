@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Llama318bInstant {
 
@@ -28,15 +34,23 @@ public class Llama318bInstant {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[1000];
-        for (int i = 0; i < 1000; i++) {
-            arr[i] = i;
+        List<Integer> inputList = new ArrayList<>();
+
+        // Ler o array ordenado de ../../inputs.txt
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                inputList.add(Integer.parseInt(line.trim()));
+            }
+        } catch (IOException e) {
+            return;
         }
 
-        // Test the binary search function
-        for (int i = 0; i < 1000; i++) {
-            int result = binarySearch(arr, i);
-            // No print statement, just test the function
-        }
+        int[] array = inputList.stream().mapToInt(Integer::intValue).toArray();
+
+        int target = 15;
+        Arrays.sort(array);
+        int result = binarySearch(array, target);
+
     }
 }

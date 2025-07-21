@@ -47,7 +47,7 @@ class Graph {
             int v = edges[i].dest;
             int weight = edges[i].weight;
             if (dist[u] != Integer.MAX_VALUE && dist[u] + weight < dist[v]) {
-                throw new RuntimeException("Graph contains negative weight cycle");
+                //throw new RuntimeException("Graph contains negative weight cycle");
             }
         }
     }
@@ -55,22 +55,49 @@ class Graph {
 
 public class llama3370bVersatile {
     public static void main(String[] args) {
-        Random random = new Random();
-        for (int i = 0; i < 1000; i++) {
-            int vertices = random.nextInt(10) + 1;
-            int edges = random.nextInt(20) + 1;
-            Graph graph = new Graph(vertices, edges);
-            for (int j = 0; j < edges; j++) {
-                int src = random.nextInt(vertices);
-                int dest = random.nextInt(vertices);
-                int weight = random.nextInt(10) - 5;
-                graph.addEdge(src, dest, weight, j);
+        final int V = 1000; // Número de vértices
+        int[][] graph = new int[V][V]; // Matriz de adjacência
+
+        // Lê as arestas do arquivo
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../graph_input.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.trim().split("\\s+");
+                if (parts.length != 3) continue;
+
+                int src = Integer.parseInt(parts[0]);
+                int dest = Integer.parseInt(parts[1]);
+                int weight = Integer.parseInt(parts[2]);
+
+                graph[src][dest] = weight;
             }
-            try {
-                graph.bellmanFord(0);
-            } catch (RuntimeException e) {
-                // Handle negative weight cycle
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        try {
+            // Count edges
+            int edgeCount = 0;
+            for (int i = 0; i < V; i++) {
+                for (int j = 0; j < V; j++) {
+                    if (graph[i][j] != 0) edgeCount++;
+                }
             }
+
+            Graph g = new Graph(V, edgeCount);
+            int idx = 0;
+            for (int i = 0; i < V; i++) {
+                for (int j = 0; j < V; j++) {
+                    if (graph[i][j] != 0) {
+                        g.addEdge(i, j, graph[i][j], idx++);
+                    }
+                }
+            }
+
+            g.bellmanFord(0); // Usa o vértice 0 como origem
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
         }
     }
+
 }

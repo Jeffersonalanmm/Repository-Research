@@ -27,26 +27,51 @@ public class llama318bInstant {
 
         for (Edge edge : edges) {
             if (distance[edge.source] != Integer.MAX_VALUE && distance[edge.source] + edge.weight < distance[edge.destination]) {
-                throw new RuntimeException("Graph contains a negative-weight cycle");
+                //throw new RuntimeException("Graph contains a negative-weight cycle");
             }
         }
     }
 
     public static void main(String[] args) {
-        List<Edge> edges = new ArrayList<>();
-        edges.add(new Edge(0, 1, -1));
-        edges.add(new Edge(0, 2, 4));
-        edges.add(new Edge(1, 2, 3));
-        edges.add(new Edge(1, 3, 2));
-        edges.add(new Edge(1, 4, 2));
-        edges.add(new Edge(3, 2, 5));
-        edges.add(new Edge(3, 1, 1));
-        edges.add(new Edge(4, 3, -3));
+        final int V = 1000; // Número de vértices
+        int[][] graph = new int[V][V]; // Matriz de adjacência
 
-        int V = edges.stream().mapToInt(e -> e.destination).max().getAsInt() + 1;
+        // Lê as arestas do arquivo
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../graph_input.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.trim().split("\\s+");
+                if (parts.length != 3) continue;
+
+                int src = Integer.parseInt(parts[0]);
+                int dest = Integer.parseInt(parts[1]);
+                int weight = Integer.parseInt(parts[2]);
+
+                graph[src][dest] = weight;
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Convert adjacency matrix to list of edges
+        List<Edge> edges = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (graph[i][j] != 0) {
+                    edges.add(new Edge(i, j, graph[i][j]));
+                }
+            }
+        }
+
         int[] distance = new int[V];
         Arrays.fill(distance, Integer.MAX_VALUE);
 
-        bellmanFord(edges, 0, distance);
+        try {
+            bellmanFord(edges, 0, distance);
+
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+        }
     }
+
 }

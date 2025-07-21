@@ -52,16 +52,27 @@ public class MetaLlama4Scout17b16eInstruct {
     }
 
     public static void main(String[] args) {
-        Random rand = new Random();
-        int vertices = rand.nextInt(100) + 2;
-        Graph graph = new Graph(vertices);
-        for (int i = 0; i < vertices * 2; i++) {
-            int src = rand.nextInt(vertices);
-            int dest = rand.nextInt(vertices);
-            int weight = rand.nextInt(100) - 50;
-            graph.addEdge(src, dest, weight);
+        final int V = 1000; // Número de vértices
+        Graph g = new Graph(V);
+
+        // Lê as arestas do arquivo
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../graph_input.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.trim().split("\\s+");
+                if (parts.length != 3) continue;
+
+                int src = Integer.parseInt(parts[0]);
+                int dest = Integer.parseInt(parts[1]);
+                int weight = Integer.parseInt(parts[2]);
+
+                g.addEdge(src, dest, weight);
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
-        int srcVertex = rand.nextInt(vertices);
-        boolean result = graph.bellmanFord(srcVertex);
+
+        boolean hasNoNegativeCycle = g.bellmanFord(0);
     }
+
 }

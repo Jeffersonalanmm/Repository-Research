@@ -1,4 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class MistralSaba24b {
@@ -30,16 +35,23 @@ public class MistralSaba24b {
     }
 
     public static void main(String[] args) {
-        Random random = new Random();
-        int[] array = new int[1000];
-        for (int i = 0; i < 1000; i++) {
-            array[i] = random.nextInt(10000);
-        }
-        Arrays.sort(array);
+        List<Integer> inputList = new ArrayList<>();
 
-        int target = random.nextInt(10000);
+        // Ler o array ordenado de ../../inputs.txt
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                inputList.add(Integer.parseInt(line.trim()));
+            }
+        } catch (IOException e) {
+            return;
+        }
+
+        int[] array = inputList.stream().mapToInt(Integer::intValue).toArray();
+
+        int target = 15;
+        Arrays.sort(array);
         int result = binarySearch(array, target);
 
-        // The result can be used further as needed
     }
 }

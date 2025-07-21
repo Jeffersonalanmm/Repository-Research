@@ -1,5 +1,8 @@
-package Java.red-black tree;
+
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 class Node {
     int data;
@@ -190,11 +193,18 @@ public class llama3_3_70b {
             insert(randomData);
         }
     }
-}
 
-public class Main {
     public static void main(String[] args) {
-        RedBlackTree tree = new RedBlackTree();
-        tree.generateAndInsertRandomInputs();
+        llama3_3_70b rbt = new llama3_3_70b();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                rbt.insert(value);
+            }
+        } catch (IOException e) {
+            return;
+        }
     }
 }

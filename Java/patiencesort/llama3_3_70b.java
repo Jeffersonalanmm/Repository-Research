@@ -1,4 +1,4 @@
-package Java.patiencesort;
+
 import java.util.*;
 public class llama3_3_70b {
 
@@ -52,15 +52,22 @@ public class llama3_3_70b {
     }
 
     public static void main(String[] args) {
-        // Generate 1000 random inputs
-        Random rand = new Random();
         List<Integer> input = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            input.add(rand.nextInt(1000));
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
 
-        // Run patience sort
+        // Usa o método existente
         List<Integer> sortedInput = patienceSort(input);
+
     }
+
+
 
 }

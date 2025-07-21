@@ -1,5 +1,7 @@
-package Java.mergesort;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 public class deepseek_r1_disill_llama {
 
     public static void mergeSort(int[] array) {
@@ -39,8 +41,21 @@ public class deepseek_r1_disill_llama {
     }
 
     public static void main(String[] args) {
-        int[] array = {5, 3, 8, 4, 2};
-        mergeSort(array);
-        System.out.println(Arrays.toString(array));
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
+        mergeSort(arr);
     }
 }

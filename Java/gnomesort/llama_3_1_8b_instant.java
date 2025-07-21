@@ -1,4 +1,6 @@
-package Java.gnomesort;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class llama_3_1_8b_instant {
 
@@ -33,7 +35,24 @@ public class llama_3_1_8b_instant {
     }
 
     public static void main(String[] args) {
-        int[] arr = {64, 34, 25, 12, 22, 11, 90};
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
         gnomeSort(arr);
+
+
     }
+
 }

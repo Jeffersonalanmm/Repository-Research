@@ -59,27 +59,37 @@ public class DeepSeekR1DistillLlama {
     }
 
     public static void main(String[] args) {
-        final int V = 1000;
-        final int E = 10000;
+        final int V = 1000; // Número total de vértices
         List<List<Edge>> graph = new ArrayList<>(V);
-        Random rand = new Random(12345L);
 
+        // Inicializa a lista de adjacência
         for (int i = 0; i < V; i++) {
             graph.add(new ArrayList<>());
         }
 
-        for (int i = 0; i < E; i++) {
-            int src = rand.nextInt(V);
-            int dest = rand.nextInt(V);
-            int weight = rand.nextInt(10000) - 5000; // Random weight between -5000 and 4999
-            graph.get(src).add(new Edge(src, dest, weight));
+        // Lê as arestas do arquivo
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../graph_input.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.trim().split("\\s+");
+                if (parts.length != 3) continue;
+
+                int src = Integer.parseInt(parts[0]);
+                int dest = Integer.parseInt(parts[1]);
+                int weight = Integer.parseInt(parts[2]);
+
+                graph.get(src).add(new Edge(src, dest, weight));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
 
         int[] dist = new int[V];
         try {
             bellmanFord(graph, V, 0, dist);
         } catch (RuntimeException e) {
-            System.err.println(e.getMessage());
+            return;
         }
     }
+
 }

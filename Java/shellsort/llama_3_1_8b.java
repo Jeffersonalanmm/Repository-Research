@@ -1,4 +1,7 @@
-package Java.shellsort;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class llama_3_1_8b {
 
@@ -29,13 +32,21 @@ public class llama_3_1_8b {
     }
 
     public static void main(String[] args) {
-        // Test the implementation with 1000 random inputs
-        int[] arr = new int[1000];
-        for (int i = 0; i < 1000; i++) {
-            arr[i] = (int) (Math.random() * 1000);
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
 
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
         shellSort(arr);
     }
-
 }

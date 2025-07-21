@@ -1,4 +1,7 @@
-package Java.red-black tree;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 enum Color {
     RED,
@@ -196,18 +199,19 @@ public class llama_3_1_8b {
             return true;
         }
     }
-}
 
-public class Main {
+
     public static void main(String[] args) {
-        RedBlackTree tree = new RedBlackTree();
-        for (int i = 0; i < 1000; i++) {
-            tree.insert(i);
+        llama_3_1_8b rbt = new llama_3_1_8b();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                rbt.insert(value);
+            }
+        } catch (IOException e) {
+            return;
         }
-        System.out.println(tree.getHeight());
-        System.out.println(tree.getMinKey());
-        System.out.println(tree.getMaxKey());
-        System.out.println(tree.isEmpty());
-        System.out.println(tree.contains(500));
     }
 }

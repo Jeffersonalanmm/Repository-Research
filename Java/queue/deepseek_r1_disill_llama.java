@@ -1,6 +1,8 @@
-package Java.queue;
 
-import org.w3c.dom.Node;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class deepseek_r1_disill_llama<T> {
     private Node<T> front;
@@ -48,20 +50,22 @@ public class deepseek_r1_disill_llama<T> {
     }
 
     public static void main(String[] args) {
-        deepseek_r1_disill_llama<Integer> queue = new deepseek_r1_disill_llama<>(); // Create a queue 10 random integers
-        for (int i = 0; i < 10; i++) {
-            queue.enqueue((int) (Math.random() * 100));
+        deepseek_r1_disill_llama<Integer> queue = new deepseek_r1_disill_llama<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                queue.enqueue(value);
+            }
+        } catch (IOException e) {
+            return;
         }
-        
-        // Dequeue and print all elements
+
+        // Desenfileirar e imprimir todos os elementos
         while (!queue.isEmpty()) {
-            System.out.println(queue.dequeue());
+            queue.dequeue();
         }
-        
-        // Test empty queue
-        System.out.println(queue.dequeue()); // Should print null
-        System.out.println(queue.peek());    // Should print null
-        System.out.println(queue.isEmpty()); // Should print true
     }
 }
 

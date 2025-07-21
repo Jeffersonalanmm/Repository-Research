@@ -1,4 +1,6 @@
-package Java.selectionsort;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class llama3_3_70b {
@@ -34,16 +36,24 @@ public class llama3_3_70b {
         array[j] = temp;
     }
 
-    /**
-     * Generate an array of 1000 random integers and sort it using selection sort.
-     */
-    public static void main() {
-        Random random = new Random();
-        int[] array = new int[1000];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = random.nextInt(1001); // Generate random integers between 0 and 1000
+    public static void main(String[] args) {
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
-        selectionSort(array);
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
+        selectionSort(arr);
+
     }
 
 }

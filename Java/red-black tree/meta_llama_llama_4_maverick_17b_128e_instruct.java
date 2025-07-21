@@ -1,5 +1,8 @@
-package Java.red-black tree;
+
 import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class meta_llama_llama_4_maverick_17b_128e_instruct {
   
@@ -26,7 +29,7 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
     private Node root;
     private Node TNULL;
 
-    public RedBlackTree() {
+    public meta_llama_llama_4_maverick_17b_128e_instruct() {
         TNULL = new Node(0, BLACK);
         root = TNULL;
     }
@@ -156,11 +159,18 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
         fixInsert(node);
     }
 
+
     public static void main(String[] args) {
-        RedBlackTree tree = new RedBlackTree();
-        Random rand = new Random();
-        for (int i = 0; i < 1000; i++) {
-            tree.insert(rand.nextInt(10000));
+        meta_llama_llama_4_maverick_17b_128e_instruct rbt = new meta_llama_llama_4_maverick_17b_128e_instruct();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                rbt.insert(value);
+            }
+        } catch (IOException e) {
+            return;
         }
     }
 }

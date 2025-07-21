@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MetaLlamaLlama4Maverick17b128eInstruct {
 
     /**
@@ -34,16 +41,24 @@ public class MetaLlamaLlama4Maverick17b128eInstruct {
     }
 
     public static void main(String[] args) {
-        // Generate a large sorted array
-        int[] arr = new int[1000];
-        for (int i = 0; i < 1000; i++) {
-            arr[i] = i;
+        List<Integer> inputList = new ArrayList<>();
+
+        // Ler o array ordenado de ../../inputs.txt
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                inputList.add(Integer.parseInt(line.trim()));
+            }
+        } catch (IOException e) {
+            return;
         }
 
-        // Perform binary search
-        int target = 512; // Example target
-        int result = binarySearch(arr, target);
+        int[] array = inputList.stream().mapToInt(Integer::intValue).toArray();
 
-        // You can use the result as needed, e.g., store it or use it in further computations
+        int target = 15;
+        Arrays.sort(array);
+        int result = binarySearch(array, target);
+
+
     }
 }

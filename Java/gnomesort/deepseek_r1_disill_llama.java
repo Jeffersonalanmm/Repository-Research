@@ -1,4 +1,7 @@
-package Java.gnomesort;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.text.Position;
 
@@ -39,8 +42,27 @@ public class deepseek_r1_disill_llama {
     }
 
     public static void main(String[] args) {
-        Integer[] array = {5, 3, 2, 4, 1};
-        gnomeSort(array);
-        // The array is now sorted in ascending order
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Convert List<Integer> to Integer[]
+        Integer[] arr = input.toArray(new Integer[0]);
+
+        gnomeSort(arr);
+
+        // Convert sorted Integer[] back to List<Integer> if needed
+        List<Integer> sorted = new ArrayList<>();
+        for (int num : arr) {
+            sorted.add(num);
+        }
+
     }
 }

@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class MetaMetaLlama4Scout17b16eInstruct {
@@ -22,15 +28,22 @@ public class MetaMetaLlama4Scout17b16eInstruct {
     }
 
     public static void main(String[] args) {
-        Random rand = new Random();
-        int[] arr = new int[1000];
-        for (int i = 0; i < 1000; i++) {
-            arr[i] = rand.nextInt(1000);
+        List<Integer> inputList = new ArrayList<>();
+
+        // Ler o array ordenado de ../../inputs.txt
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                inputList.add(Integer.parseInt(line.trim()));
+            }
+        } catch (IOException e) {
+            return;
         }
-        java.util.Arrays.sort(arr);
 
-        int target = rand.nextInt(1000);
+        int[] array = inputList.stream().mapToInt(Integer::intValue).toArray();
 
-        int result = binarySearch(arr, target);
+        int target = 15;
+        Arrays.sort(array);
+        int result = binarySearch(array, target);
     }
 }

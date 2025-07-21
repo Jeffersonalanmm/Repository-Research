@@ -1,5 +1,8 @@
-package Java.dijkstra;
 
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -48,26 +51,44 @@ public class deepseek_r1_disill_llama {
     }
 
     public static void main(String[] args) {
-        // Example usage:
-        int numNodes = 5;
+        String filePath = "../../graph_input.txt";
+        List<int[]> edges = new ArrayList<>();
+        int maxNode = 0;
+
+        // Leitura do arquivo
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.trim().split("\\s+");
+                if (tokens.length != 3) continue;
+
+                int from = Integer.parseInt(tokens[0]);
+                int to = Integer.parseInt(tokens[1]);
+                int weight = Integer.parseInt(tokens[2]);
+
+                edges.add(new int[]{from, to, weight});
+                maxNode = Math.max(maxNode, Math.max(from, to));
+            }
+        } catch (IOException e) {
+            return;
+        }
+
+        int numNodes = maxNode + 1;
         List<List<Edge>> graph = new ArrayList<>();
         for (int i = 0; i < numNodes; i++) {
             graph.add(new ArrayList<>());
         }
 
-        graph.get(0).add(new Edge(1, 4));
-        graph.get(0).add(new Edge(2, 1));
-        graph.get(1).add(new Edge(3, 1));
-        graph.get(2).add(new Edge(1, 5));
-        graph.get(2).add(new Edge(3, 8));
-        graph.get(2).add(new Edge(4, 2));
-        graph.get(3).add(new Edge(4, 10));
+        for (int[] edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            int weight = edge[2];
+            graph.get(from).add(new Edge(to, weight));
+        }
 
-        int source = 0;
+        int source = 0; // Pode mudar conforme necessário
         int[] distances = shortestPath(graph, source, numNodes);
 
-        for (int i = 0; i < numNodes; i++) {
-            System.out.println("Shortest distance from " + source + " to " + i + ": " + distances[i]);
-        }
     }
+
 }

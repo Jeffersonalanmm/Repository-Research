@@ -1,4 +1,6 @@
-package Java.cyclesort;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class llama_3_1_8b {
        public static void cycleSort(int[] arr) {
@@ -56,8 +58,27 @@ public class llama_3_1_8b {
     }
 
     public static void main(String[] args) {
-        int[] arr = {4, 3, 2, 10, 12, 1, 5, 6};
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Convert List<Integer> to int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
         cycleSort(arr);
-        // No print statement, just an empty main method
+
+        // Convert sorted int[] back to List<Integer> if needed
+        List<Integer> sorted = new ArrayList<>();
+        for (int num : arr) {
+            sorted.add(num);
+        }
+
     }
 }

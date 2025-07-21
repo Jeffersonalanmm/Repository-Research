@@ -1,4 +1,7 @@
-package Java.queue;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 public class llama3_3_70b {
 
@@ -73,12 +76,20 @@ public class llama3_3_70b {
     }
 
     public static void main(String[] args) {
-        llama3_3_70b queue = new llama3_3_70b(1000);
-        Random random = new Random();
-        for (int i = 0; i < 1000; i++) {
-            queue.enqueue(random.nextInt(1000));
+        llama3_3_70b queue = new llama3_3_70b(100); // Set capacity as needed
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                queue.enqueue(value);
+            }
+        } catch (IOException e) {
+            return;
         }
-        for (int i = 0; i < 500; i++) {
+
+        // Desenfileirar e imprimir todos os elementos
+        while (!queue.isEmpty()) {
             queue.dequeue();
         }
     }

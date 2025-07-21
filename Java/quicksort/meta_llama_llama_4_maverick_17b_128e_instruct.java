@@ -1,4 +1,6 @@
-package Java.quicksort;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 public class meta_llama_llama_4_maverick_17b_128e_instruct {
     
@@ -33,13 +35,23 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
         arr[j] = temp;
     }
 
-    public static void main(String[] args) {
-        int n = 1000;
-        int[] arr = new int[n];
-        Random rand = new Random();
-        for (int i = 0; i < n; i++) {
-            arr[i] = rand.nextInt(10000);
+ public static void main(String[] args) {
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
         quickSort(arr);
+
     }
 }

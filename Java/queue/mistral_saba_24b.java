@@ -1,4 +1,7 @@
-package Java.queue;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -30,16 +33,21 @@ public class mistral_saba_24b {
     }
 
     public static void main(String[] args) {
-        mistral_saba_24b optimizedQueue = new mistral_saba_24b();
+        mistral_saba_24b queue = new mistral_saba_24b();
 
-        // 1000 random inputs
-        for (int i = 0; i < 1000; i++) {
-            optimizedQueue.enqueue((int) (Math.random() * 10000));
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                queue.enqueue(value);
+            }
+        } catch (IOException e) {
+            return;
         }
 
-        // Dequeue all elements
-        while (!optimizedQueue.isEmpty()) {
-            optimizedQueue.dequeue();
+        // Desenfileirar e imprimir todos os elementos
+        while (!queue.isEmpty()) {
+           queue.dequeue();
         }
     }
 }

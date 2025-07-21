@@ -1,10 +1,14 @@
-package Java.dijkstra;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
 
-public class gemma2_9b_it {
+public class Gemma2_9b_it {
      public static void dijkstra(int[][] graph, int source) {
         int numVertices = graph.length;
         int[] distances = new int[numVertices];
@@ -37,19 +41,41 @@ public class gemma2_9b_it {
     }
 
     public static void main(String[] args) {
-        // Example usage:
-        int[][] graph = {
-                {0, 4, 0, 0, 0, 0, 0, 8, 0},
-                {4, 0, 8, 0, 0, 0, 0, 11, 0},
-                {0, 8, 0, 7, 0, 4, 0, 0, 2},
-                {0, 0, 7, 0, 9, 14, 0, 0, 0},
-                {0, 0, 0, 9, 0, 10, 0, 0, 0},
-                {0, 0, 4, 14, 10, 0, 2, 0, 0},
-                {0, 0, 0, 0, 0, 2, 0, 1, 6},
-                {8, 11, 0, 0, 0, 0, 1, 0, 7},
-                {0, 0, 2, 0, 0, 0, 6, 7, 0}
-        };
-        int source = 0;
+        String filePath = "../../graph_input.txt";
+        List<int[]> edges = new ArrayList<>();
+        int maxNode = 0;
+
+        // Leitura do arquivo
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.trim().split("\\s+");
+                if (tokens.length != 3) continue;
+
+                int from = Integer.parseInt(tokens[0]);
+                int to = Integer.parseInt(tokens[1]);
+                int weight = Integer.parseInt(tokens[2]);
+
+                edges.add(new int[]{from, to, weight});
+                maxNode = Math.max(maxNode, Math.max(from, to));
+            }
+        } catch (IOException e) {
+            return;
+        }
+
+        int numNodes = maxNode + 1;
+        int[][] graph = new int[numNodes][numNodes];
+
+        for (int[] edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            int weight = edge[2];
+            graph[from][to] = weight;
+        }
+
+        int source = 0; // Altere se necessário
         dijkstra(graph, source);
     }
+
+
 }

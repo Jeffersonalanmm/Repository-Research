@@ -1,5 +1,7 @@
-package Java.red-black tree;
- import java.util.Random;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
 class Node {
     int key;
     Node left;
@@ -21,7 +23,7 @@ public class meta_llama_4_scout_17b_16e_instruc {
     Node root;
     Node TNULL;
 
-    public RedBlackTree() {
+    public meta_llama_4_scout_17b_16e_instruc() {
         TNULL = new Node(0);
         TNULL.isBlack = true;
         TNULL.left = null;
@@ -178,12 +180,20 @@ public class meta_llama_4_scout_17b_16e_instruc {
         insertFix(node);
     }
 
+
     public static void main(String[] args) {
-        RedBlackTree tree = new RedBlackTree();
-        Random rand = new Random();
-        for (int i = 0; i < 1000; i++) {
-            tree.insertNode(rand.nextInt(10000));
+        meta_llama_4_scout_17b_16e_instruc rbt = new meta_llama_4_scout_17b_16e_instruc();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                rbt.insertNode(value);
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
+
     }
 }
 

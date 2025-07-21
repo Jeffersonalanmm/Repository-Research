@@ -1,5 +1,8 @@
-package Java.queue;
-    import java.util.Random;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
 public class meta_llama_4_scout_17b_16e_instruct {
     private int[] queue;
     private int front;
@@ -67,27 +70,23 @@ public class meta_llama_4_scout_17b_16e_instruct {
     }
 
     public static void main(String[] args) {
-        Random random = new Random();
-        meta_llama_4_scout_17b_16e_instruct queue = new meta_llama_4_scout_17b_16e_instruct(10);
-        for (int i = 0; i < 1000; i++) {
-            int operation = random.nextInt(3);
-            int data = random.nextInt(1000);
-            switch (operation) {
-                case 0:
-                    queue.enqueue(data);
-                    break;
-                case 1:
-                    if (!queue.isEmpty()) {
-                        queue.dequeue();
-                    }
-                    break;
-                case 2:
-                    if (!queue.isEmpty()) {
-                        queue.peek();
-                    }
-                    break;
+            meta_llama_4_scout_17b_16e_instruct queue = new meta_llama_4_scout_17b_16e_instruct(10);
+
+            try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    int value = Integer.parseInt(line.trim());
+                    queue.enqueue(value);
+                }
+            } catch (IOException e) {
+                return;
             }
+
+            // Desenfileirar e imprimir todos os elementos
+            while (!queue.isEmpty()) {
+                queue.dequeue();
+            }
+
         }
-    }
 }
 

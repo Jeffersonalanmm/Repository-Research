@@ -1,4 +1,5 @@
-package Java.quicksort;
+import java.util.ArrayList;
+import java.util.List;
 
 public class llama_3_1_8b {
 
@@ -53,10 +54,24 @@ public class llama_3_1_8b {
         arr[j] = temp;
     }
 
-    public static void main(String[] args) {
-        int[] arr = {5, 2, 9, 1, 7, 3, 6, 8, 4};
-        int n = arr.length;
-        quickSort(arr, 0, n - 1);
+ public static void main(String[] args) {
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
+        quickSort(arr, 0, arr.length - 1);
+
     }
 
 }

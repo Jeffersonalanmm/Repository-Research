@@ -1,4 +1,6 @@
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Llama3370bVersatile{
@@ -31,11 +33,18 @@ public class Llama3370bVersatile{
     }
 
     public static void main(String[] args) {
-        Random rand = new Random();
-        int[] array = new int[1000];
-        for (int i = 0; i < 1000; i++) {
-            array[i] = rand.nextInt(1000);
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
-        beadSort(array);
+
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+        beadSort(arr);
     }
 }

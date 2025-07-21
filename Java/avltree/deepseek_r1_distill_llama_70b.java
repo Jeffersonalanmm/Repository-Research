@@ -1,4 +1,10 @@
-public class deepseek_r1_distill_llama_70b {
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Deepseek_r1_distill_llama_70b {
     private Node root;
 
     private class Node {
@@ -131,19 +137,17 @@ public class deepseek_r1_distill_llama_70b {
     }
 
     public static void main(String[] args) {
-        deepseek_r1_distill_llama_70b avlTree = new deepseek_r1_distill_llama_70b();
-        java.util.Random rand = new java.util.Random();
-        for (int i = 0; i < 1000; i++) {
-            int key = rand.nextInt(10000);
-            avlTree.insert(key, "Value " + key);
-        }
-        for (int i = 0; i < 500; i++) {
-            int key = rand.nextInt(10000);
-            avlTree.delete(key);
-        }
-        for (int i = 0; i < 1000; i++) {
-            int key = rand.nextInt(10000);
-            avlTree.find(key);
+        Deepseek_r1_distill_llama_70b avlTree = new Deepseek_r1_distill_llama_70b();
+        List<Integer> keys = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int key = Integer.parseInt(line.trim());
+                keys.add(key);
+                avlTree.insert(key, "Value " + key);
+            }
+        } catch (IOException e) {
         }
     }
 }

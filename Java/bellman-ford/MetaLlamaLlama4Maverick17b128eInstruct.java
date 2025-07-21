@@ -38,22 +38,42 @@ public class MetaLlamaLlama4Maverick17b128eInstruct {
     }
 
     public static void main(String[] args) {
-        Random rand = new Random();
-        int V = 1000;
-        int E = V * (V - 1);
-        Edge[] edges = new Edge[E];
-        int index = 0;
+        final int V = 1000; // Número de vértices
+        int[][] graph = new int[V][V]; // Matriz de adjacência
+
+        // Lê as arestas do arquivo
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../graph_input.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.trim().split("\\s+");
+                if (parts.length != 3) continue;
+
+                int src = Integer.parseInt(parts[0]);
+                int dest = Integer.parseInt(parts[1]);
+                int weight = Integer.parseInt(parts[2]);
+
+                graph[src][dest] = weight;
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Convert adjacency matrix to Edge array
+        java.util.List<Edge> edgeList = new java.util.ArrayList<>();
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
-                if (i != j) {
-                    edges[index] = new Edge(i, j, rand.nextInt(100));
-                    index++;
-                    if (index >= E) break;
+                if (graph[i][j] != 0) {
+                    edgeList.add(new Edge(i, j, graph[i][j]));
                 }
             }
-            if (index >= E) break;
         }
-        bellmanFord(edges, V, E);
+        Edge[] edges = edgeList.toArray(new Edge[0]);
+        int E = edges.length;
+
+        try {
+            bellmanFord(edges, V, E);
+        } catch (RuntimeException e) {
+        }
     }
+
 }
-```

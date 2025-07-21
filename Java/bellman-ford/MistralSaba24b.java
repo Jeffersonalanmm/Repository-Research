@@ -24,34 +24,57 @@ public class MistralSaba24b {
             int v = edges[j][1];
             int w = edges[j][2];
             if (dist[u] != INF && dist[u] + w < dist[v]) {
-                System.out.println("Graph contains negative weight cycle");
+                //System.out.println("Graph contains negative weight cycle");
                 return;
             }
         }
 
         for (int i = 0; i < V; i++) {
             if (dist[i] == INF) {
-                System.out.println("Vertex " + i + " is unreachable");
+                //System.out.println("Vertex " + i + " is unreachable");
             } else {
-                System.out.println("Vertex " + i + " is reachable from source with distance " + dist[i]);
+                //System.out.println("Vertex " + i + " is reachable from source with distance " + dist[i]);
             }
         }
     }
 
     public static void main(String[] args) {
-        int V = 1000; // Number of vertices
-        int E = 2000; // Number of edges
-        int src = 0; // Source vertex
+        final int V = 1000; // Número de vértices
+        int[][] graph = new int[V][V]; // Matriz de adjacência
 
-        Random rand = new Random();
-        int[][] edges = new int[E][3];
+        // Lê as arestas do arquivo
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../graph_input.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.trim().split("\\s+");
+                if (parts.length != 3) continue;
 
-        for (int i = 0; i < E; i++) {
-            edges[i][0] = rand.nextInt(V);
-            edges[i][1] = rand.nextInt(V);
-            edges[i][2] = rand.nextInt(100) - 50; // Random weights between -50 and 50
+                int src = Integer.parseInt(parts[0]);
+                int dest = Integer.parseInt(parts[1]);
+                int weight = Integer.parseInt(parts[2]);
+
+                graph[src][dest] = weight;
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
 
-        bellmanFord(V, E, src, edges);
+        // Convert adjacency matrix to edge list
+        List<int[]> edgeList = new ArrayList<>();
+        for (int u = 0; u < V; u++) {
+            for (int v = 0; v < V; v++) {
+                if (graph[u][v] != 0) {
+                    edgeList.add(new int[]{u, v, graph[u][v]});
+                }
+            }
+        }
+        int E = edgeList.size();
+        int[][] edges = edgeList.toArray(new int[E][3]);
+
+        try {
+            bellmanFord(V, E, 0, edges); 
+        } catch (RuntimeException e) {
+        }
     }
+
 }

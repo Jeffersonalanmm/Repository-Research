@@ -1,3 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DeepseekR1DistillLlama70b {
 
     /**
@@ -37,14 +44,22 @@ public class DeepseekR1DistillLlama70b {
 
     // Example usage:
     public static void main(String[] args) {
-        int[] array = {2, 4, 5, 7, 8};
-        int target = 5;
-        int result = binarySearch(array, target);
-        
-        if (result == -1) {
-            // Handle the case where the target is not present
-        } else {
-            // Handle the case where the target is found
+        List<Integer> inputList = new ArrayList<>();
+
+        // Ler o array ordenado de ../../inputs.txt
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                inputList.add(Integer.parseInt(line.trim()));
+            }
+        } catch (IOException e) {
+            return;
         }
+
+        int[] array = inputList.stream().mapToInt(Integer::intValue).toArray();
+
+        int target = 15;
+        Arrays.sort(array);
+        int result = binarySearch(array, target);
     }
 }

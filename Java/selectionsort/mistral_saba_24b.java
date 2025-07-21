@@ -1,4 +1,6 @@
-package Java.selectionsort;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 public class mistral_saba_24b {
 
@@ -20,12 +22,23 @@ public class mistral_saba_24b {
     }
 
     public static void main(String[] args) {
-        Random random = new Random();
-        int[] array = new int[1000];
-        for (int i = 0; i < 1000; i++) {
-            array[i] = random.nextInt(10000); // Generating 1000 random integers between 0 and 9999
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
-        selectionSort(array);
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
+        selectionSort(arr);
+
     }
 
 }

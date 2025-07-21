@@ -1,5 +1,6 @@
-package Java.gnomesort;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class llama3_3_70b {
@@ -45,7 +46,24 @@ public class llama3_3_70b {
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        int[] array = generateRandomArray();
-        gnomeSort(array);
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
+        gnomeSort(arr);
+
+
     }
+
 }

@@ -1,5 +1,8 @@
-package Java.queue;
-    import java.util.Random;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
 public class meta_llama_llama_4_maverick_17b_128e_instruct {
     public class Main {
         static class Queue {
@@ -57,19 +60,24 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
                 return size == queue.length;
             }
         }
+    }
+    public static void main(String[] args) {
+        Main.Queue queue = new Main.Queue(1000);
 
-        public static void main(String[] args) {
-            Queue queue = new Queue(1000);
-            Random random = new Random();
-
-            for (int i = 0; i < 1000; i++) {
-                int num = random.nextInt(1000);
-                queue.enqueue(num);
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                queue.enqueue(value);
             }
-
-            for (int i = 0; i < 1000; i++) {
-                queue.dequeue();
-            }
+        } catch (IOException e) {
+            return;
         }
+
+        // Desenfileirar e imprimir todos os elementos
+        while (!queue.isEmpty()) {
+            queue.dequeue();
+        }
+
     }
 }

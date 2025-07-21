@@ -1,4 +1,5 @@
-package Java.shellsort;
+import java.util.ArrayList;
+import java.util.List;
 
 public class meta_llama_llama_4_maverick_17b_128e_instruct {
 
@@ -21,11 +22,22 @@ public class meta_llama_llama_4_maverick_17b_128e_instruct {
     }
 
     public static void main(String[] args) {
-        int[] array = new int[1000];
-        java.util.Random rand = new java.util.Random();
-        for (int i = 0; i < 1000; i++) {
-            array[i] = rand.nextInt(1000);
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
         }
-        shellSort(array);
+
+        // Converte List<Integer> diretamente para int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        // Usa o método existente
+        shellSort(arr);
+
     }
 }

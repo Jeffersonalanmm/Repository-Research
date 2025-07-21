@@ -1,4 +1,6 @@
-package Java.red-black tree;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Random;
 class Node {
     boolean color;
@@ -275,13 +277,20 @@ public class mistral_saba_24b {
         }
     }
 
+
     public static void main(String[] args) {
-        RedBlackTree tree = new RedBlackTree();
-        Random rand = new Random();
-        for (int i = 0; i < 1000; i++) {
-            tree.insert(rand.nextInt(10000));
+        mistral_saba_24b rbt = new mistral_saba_24b();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                rbt.insert(value);
+            }
+        } catch (IOException e) {
+            return;
         }
-        tree.inorder();
+
     }
 }
 

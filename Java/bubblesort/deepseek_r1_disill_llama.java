@@ -1,4 +1,5 @@
-package Java.bubblesort;
+import java.util.ArrayList;
+import java.util.List;
 
 public class deepseek_r1_disill_llama {
     
@@ -18,6 +19,30 @@ public class deepseek_r1_disill_llama {
             if (!swapped) {
                 break;
             }
+        }
+    }
+
+    public static void main(String[] args) {
+        List<Integer> input = new ArrayList<>();
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader("../../inputs.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                input.add(Integer.parseInt(line.trim()));
+            }
+        } catch (java.io.IOException e) {
+            return;
+        }
+
+        // Convert List<Integer> to int[]
+        int[] arr = input.stream().mapToInt(Integer::intValue).toArray();
+
+        bubbleSort(arr);
+
+        // Convert sorted int[] back to List<Integer> if needed
+        List<Integer> sorted = new ArrayList<>();
+        for (int num : arr) {
+            sorted.add(num);
         }
     }
 }

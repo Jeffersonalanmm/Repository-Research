@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import java.util.Random;
 
-public class Meta_llama_llama_4_scout_17b_16e_instruct {
+public class MetaLlamaLlama4Maverick17b128eInstruct {
 
     // Node class representing each node in the AVL tree
     static class Node {
@@ -107,7 +107,7 @@ public class Meta_llama_llama_4_scout_17b_16e_instruct {
 
     // Method to generate 1000 random keys and insert them into the AVL treepublic static void main(String[] args) {
     public static void main(String[] args) {
-        Meta_llama_llama_4_scout_17b_16e_instruct avlTree = new Meta_llama_llama_4_scout_17b_16e_instruct();
+        MetaLlamaLlama4Maverick17b128eInstruct avlTree = new MetaLlamaLlama4Maverick17b128eInstruct();
         List<Integer> keys = new ArrayList<>();
         Node root = null;
 

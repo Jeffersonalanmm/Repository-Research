@@ -1,1 +1,1 @@
-# rAssessing the Environmental Impact of LLM-Generated Algorithm Implementations
+# Assessing the Environmental Impact of LLM-Generated Algorithm Implementations
